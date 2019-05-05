@@ -3,8 +3,6 @@ package edu.room.manage.domain;
 import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.Column;
-
 /**
  * @author 执笔
  * @date 2019/5/3 14:45
@@ -18,20 +16,23 @@ public class Approval extends BaseDomain {
     private Integer userId;
 
     /**
-     * 审批类型
+     * 预约教室
      */
-    private String type;
+    private Integer roomId;
 
     /**
-     * 备注
+     * 预约时间
      */
-    @Column(columnDefinition = "text")
-    private String remark;
+    private String orderTime;
 
     /**
-     * 审批意见
+     * 一级审批意见
      */
-    private String opinion;
+    private String opinion1;
+    /**
+     * 二级审批意见
+     */
+    private String opinion2;
 
     private ApprovalStatusEnum status;
 
@@ -44,10 +45,15 @@ public class Approval extends BaseDomain {
         /**
          * 同意
          */
-        AGREE,
+        AGREE_1,
         /**
          * 拒绝
          */
-        REJECT;
+        REJECT_1,
+        AGREE_2,
+        /**
+         * 拒绝
+         */
+        REJECT_2;
     }
 }

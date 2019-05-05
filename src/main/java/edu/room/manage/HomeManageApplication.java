@@ -16,7 +16,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @EnableConfigurationProperties
 @EnableTransactionManagement
-@MapperScan("edu.hrm.mapper")
+@MapperScan("edu.room.manage.mapper")
 public class HomeManageApplication {
 
     public static void main(String[] args) {

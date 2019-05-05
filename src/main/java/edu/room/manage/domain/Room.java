@@ -3,8 +3,6 @@ package edu.room.manage.domain;
 import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.Column;
-
 /**
  * 教室
  *
@@ -17,16 +15,24 @@ public class Room extends BaseDomain {
 
     private String address;
 
-    private String action;
-
-    /**
-     * 数据
-     */
-    @Column(columnDefinition = "text")
-    private String data;
-
     /**
      * 辅导员ID
      */
     private Integer userId;
+    /**
+     * 所属教学楼
+     */
+    private Integer floorId;
+
+    /**
+     * 星期
+     * 1 2 3 4
+     */
+    private String week1;
+    private String week2;
+    private String week3;
+    private String week4;
+    private String week5;
+    private String week6;
+    private String week7;
 }

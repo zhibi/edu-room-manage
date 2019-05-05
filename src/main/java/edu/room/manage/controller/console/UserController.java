@@ -7,11 +7,9 @@ import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.User;
-import edu.room.manage.domain.UserRole;
 import edu.room.manage.mapper.UserMapper;
-import edu.room.manage.mapper.UserRoleMapper;
 import edu.room.manage.service.FileUploadService;
-import edu.room.manage.service.RoleService;
+import edu.room.manage.service.RoomService;
 import edu.room.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author 执笔
@@ -41,11 +37,9 @@ public class UserController extends BaseController {
     private UserService    userService;
     @Autowired
     private UserMapper     userMapper;
-    @Autowired
-    private UserRoleMapper userRoleMapper;
 
     @Autowired
-    private RoleService       roleService;
+    private RoomService       roomService;
     @Autowired
     private FileUploadService fileUploadService;
 
@@ -59,22 +53,11 @@ public class UserController extends BaseController {
     @Operation("用户详情")
     @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
     public String detail(@PathVariable Integer id, Model model) {
-        String checkRoleId = "";
         User   user        = userMapper.selectByPrimaryKey(id);
         if (null != user) {
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getId());
-            List<UserRole>    userRoleLists = userRoleMapper.select(userRole);
-            ArrayList<String> checkRoleIds  = new ArrayList<>();
-            for (UserRole userRoleList : userRoleLists) {
-                checkRoleIds.add(userRoleList.getRoleId() + "");
-            }
-            checkRoleId = String.join(",", checkRoleIds);
         } else {
             user = new User();
         }
-        model.addAttribute("checkRoleId", checkRoleId);
-        model.addAttribute("roleList", roleService.getAllEnable());
         model.addAttribute("user", user);
         return "console/user/detail";
     }
