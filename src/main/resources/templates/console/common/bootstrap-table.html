@@ -1,0 +1,94 @@
+<link rel="stylesheet" href="/assets/bootstrap-table/1.11.1/bootstrap-table.min.css"/>
+<script type="text/javascript" src="/assets/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/assets/bootstrap-table/1.11.1/local/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript" src="/assets/layer/3.0.1/layer.js"></script>
+<script type="text/javascript">
+    $table = $("#dataGrid");
+
+    /**
+     *表格数据渲染
+     */
+    function initDataGrid(url, columns) {
+        //先销毁表格
+        $table.bootstrapTable('destroy');
+        $table.bootstrapTable({
+            height: 600,
+            url: url,
+            search: false,
+            pagination: true,//开启分页
+            locale: 'zh-CN',//中文支持
+            contentType: "application/json", // 请求体类型定义
+            sidePagination: 'server',//服务端分页
+            pageNumber: 1,//默认加载页
+            pageSize: 10,//每页数据
+            pageList: [10, 20, 50],//可选每页数据
+            queryParamsType: 'limit',//默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort ；设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
+            toolbar: "#toolbar", // 工具按钮用哪个容器
+            showRefresh: true,//是否显示刷新按钮
+            //clickToSelect : true, // 是否启用点击选中行
+            showToggle: true,
+            columns: columns,
+            queryParams: function (params) {//请求服务器数据时的参数
+                var data = {};
+                $.each($("#searchForm").serializeArray(), function (i, field) {
+                    if (field.value !== "" && field.value != null) {
+                        console.info(field.name + ":" + field.value + " ");
+                        data[field.name] = field.value;
+                    }
+                });
+                data['offset'] = params.offset;  //页面大小
+                data['limit'] = params.limit;  //页码
+                return data;
+            },
+            responseHandler: function (res) {//在获取到数据，渲染表格之前，修改数据源
+                return {
+                    rows: res.result.pageInfo.list,
+                    total: res.result.pageInfo.total
+                }
+            }
+        });
+    }
+
+    /**
+     * 查询按钮，刷新表单，从第一页开始显示
+     */
+    $("#searchBtn").off().on("click", function () {
+        $table.bootstrapTable('refreshOptions', {pageNumber: 1}, 'refresh');
+    });
+
+    /**
+     * 操作
+     * @type {{redirect, delRow, reloadPage}}
+     */
+    var operaModel = (function () {
+        return {
+            delRow: function (rowid, url, field) {
+                layer.confirm('确定删除吗?', function () {
+                    $.getJSON(url, {id: rowid}, function (ret) {
+                        if (ret.status === 1) {
+                            layer.msg(ret.msg, {icon: 1});
+                            $table.bootstrapTable('remove', {
+                                field: field,
+                                values: [rowid]
+                            });
+                        } else {
+                            layer.msg(ret.msg, {icon: 2});
+                        }
+                    });
+                });
+            },
+            //重新刷新页面，使用location.reload()有可能导致重新提交
+            reloadPage: function (win) {
+                var location = win.location;
+                location.href = location.pathname + location.search;
+            },
+            /**
+             * 页面跳转
+             * @param url
+             */
+            redirect: function (url) {
+                location.href = url;
+            }
+        }
+    })();
+</script>

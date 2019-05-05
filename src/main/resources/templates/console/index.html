@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>系统管理</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+  <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="/webjars/ionicons/2.0.1/css/ionicons.min.css"/>
+  <link rel="stylesheet" href="/webjars/adminlte/2.3.7/dist/css/AdminLTE.min.css"/>
+  <link rel="stylesheet" href="/webjars/adminlte/2.3.7/dist/css/skins/_all-skins.min.css"/>
+  <link rel="stylesheet" href="/css/app.css"/>
+</head>
+
+
+<body class="hold-transition skin-blue fixed sidebar-mini">
+<div class="wapper">
+  <header class="main-header">
+    <a href="/index" class="logo">
+      <span class="logo-mini"><b>权限</b></span>
+      <span class="logo-lg"><b>权限</b>管理</span>
+    </a>
+    <nav class="navbar navbar-static-top">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"></a>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/console/modifyPwd" target="mainFrame" class="btn  btn-flat">修改密码</a>
+          </li>
+          <li>
+            <a href="/console/logout" class="btn  btn-flat">退出</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="${sessionUser.icon!}" class="img-circle" style="height: 45px;width: 45px"/>
+        </div>
+        <div class="pull-left info">
+          <p>${sessionUser.username!}</p>
+        </div>
+      </div>
+      <#include "common/menu.html"/>
+    </section>
+  </aside>
+  <div class="content-wrapper">
+    <iframe name="mainFrame" id="mainFrame" src="/console/info" frameborder="false" scrolling="auto"
+            style="border:none;" width="100%" height="auto" allowtransparency="true"></iframe>
+  </div>
+  <footer class="main-footer navbar-fixed-bottom">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.0.0
+    </div>
+    <strong>Copyright &copy; 2018-2019</strong> All rights reserved.
+  </footer>
+</div>
+<script type="text/javascript" src="/webjars/jquery/2.2.4/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/webjars/jQuery-slimScroll/1.3.3/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="/webjars/adminlte/2.3.7/dist/js/app.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

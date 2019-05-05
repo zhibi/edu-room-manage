@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+<section class="content-header">
+  <h1>用户管理</h1>
+  <small>列表管理</small>
+</section>
+<section class="content table-content">
+  <#if errorMessage??>
+    <div class="alert alert-success alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+      </button>
+      ${errorMessage!}
+    </div>
+  </#if>
+
+  <table id="dataGrid"></table>
+</section>
+<div id="toolbar">
+  <form role="form" id="searchForm" class="form-inline">
+    <div class="input-group">
+      <span class="input-group-addon">用户名</span>
+      <input type="text" class="form-control" name="username">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon">员工编号</span>
+      <input type="text" class="form-control" name="serialNumber">
+    </div>
+
+    <div>
+      <button type="button" id="searchBtn" class="btn btn-primary">查询</button>
+      <button type="reset" class="btn btn-warning">清空</button>
+    </div>
+  </form>
+</div>
+<#include "../common/footer.html"/>
+<#include "../common/bootstrap-table.html"/>
+</body>
+<script type="text/javascript">
+    /**
+     * 表单初始化
+     */
+    $(function () {
+        initDataGrid('/console/user/list', [
+            {
+                title: "序号", field: "id", formatter: function (value, row, index) {
+                    //获取每页显示的数量
+                    var pageSize = $table.bootstrapTable('getOptions').pageSize;
+                    //获取当前是第几页
+                    var pageNumber = $table.bootstrapTable('getOptions').pageNumber;
+                    //返回序号，注意index是从0开始的，所以要加上1
+                    return pageSize * (pageNumber - 1) + index + 1;
+                }
+            },
+            {title: "用户Id", field: "id"},
+            {title: "员工编号", field: "serialNumber"},
+            {title: "用户名", field: "username"},
+            {title: "姓名", field: "name"},
+            {title: "电话", field: "phone"},
+            {title: "邮箱", field: "email"},
+            {title: "基本薪资", field: "salary"},
+            {title: "职位", field: "roleList", formatter: getRole},
+            {title: "注册时间", field: "createTime"},
+            {title: "更新时间", field: "updateTime"},
+            {title: "操作", field: "operate", align: 'center', events: operateEvents, formatter: operateFormatter}
+        ]);
+    });
+
+    function getRole(value, row, index) {
+        if (row.type === "ADMIN") {
+            return "超级管理（不受角色限制）"
+        } else {
+            return $.map(value, function (v) {
+                return v.name;
+            }).join(",");
+        }
+
+    }
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a href="/console/user/detail/' + row.id + '" >',
+            '   <i class="glyphicon glyphicon-edit"></i>修改',
+            '</a>  '
+        ].join('');
+    }
+
+    window.operateEvents = {
+        'click .remove': function (e, value, row, index) {
+            operaModel.delRow(row.id, '/console/user/delete', 'id');
+        }
+    };
+</script>
+</html>

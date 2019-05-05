@@ -1,0 +1,13 @@
+#开发环境
+spring:
+  datasource:
+    name: edu-hrm
+    username: leibees
+    password: leibees
+    url: jdbc:mysql://120.27.24.193:3306/edu-hrm?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
+server:
+  port: 80
+
+upload:
+  prefix: http://127.0.0.1
+  path: D:\Project-Upload\

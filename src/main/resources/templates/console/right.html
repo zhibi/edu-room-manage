@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "common/head.html"/>
+<body>
+<section class="content-header">
+  <h1>后台总览</h1>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">用户总数</span>
+          <span class="info-box-number">
+            <span>${userCount!0}</span>
+            <small>个</small>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">部门职位总数</span>
+          <span class="info-box-number">
+            <span>${roleCount!0}</span>
+            <small>个</small>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">菜单总数</span>
+          <span class="info-box-number">
+            <span>${menuCount!0}</span>
+            <small>个</small>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<#include "common/footer.html"/>
+</body>
+</html>

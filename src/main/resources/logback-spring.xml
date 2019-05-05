@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty scope="context" name="PROJECT_NAME" source="spring.application.name"/>
+
+    <property name="LOG_PATTERN"
+              value="%d{HH:mm:ss} [${LOG_LEVEL_PATTERN:-%5p}] [%11.11X{LOGIN_USER}] [%-40.40logger{39} %5line{5}] : %msg%n"/>
+
+    <property name="LOG_PATTERN_TWO"
+              value="%d{yyyy-MM-dd HH:mm:ss} [${LOG_LEVEL_PATTERN:-%5p}] [%11.11X{LOGIN_USER}] [%-40.40logger{39} %5line{5}] : %msg%n"/>
+
+    <property name="LOG_PATH" value="D:/Project-Log/"/>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 保存日志文件的路径 -->
+        <file>${LOG_PATH}/${PROJECT_NAME}/project.log</file>
+        <!-- 日志格式 -->
+        <encoder>
+            <pattern>${LOG_PATTERN_TWO}</pattern>
+        </encoder>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${LOG_PATH}/${PROJECT_NAME}/%d{yyyy-MM-dd/yyyy-MM-dd-HH}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>${LOG_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="zhibi" level="DEBUG"/>
+
+    <root level="info">
+        <appender-ref ref="file"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

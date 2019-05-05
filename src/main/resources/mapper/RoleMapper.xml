@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.room.manage.mapper.RoleMapper">
+    <delete id="deleteById">
+        delete from User_role where role_id = #{roleId};
+        delete from role where id = #{roleId};
+    </delete>
+
+    <!--根据用户ID获取用户角色名称-->
+    <select id="selectRoleByUserId" resultType="java.lang.String">
+        select r.name from role r,user_role ur
+        where r.id = ur.role_id and ur.user_id = #{id}
+    </select>
+
+    <select id="selectRoleListByUserId" resultType="edu.room.manage.domain.Role">
+        select r.id ,r.name,r.enable from role r
+        inner join user_role ur on r.id = ur.role_id
+        where ur.user_id = #{id} and r.enable = 1
+    </select>
+
+</mapper>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+<section class="content">
+  <#if errorMessage??>
+    <div class="alert alert-success alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+      </button>
+      ${errorMessage!}
+    </div>
+  </#if>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">用户${(!user.id??)?string('添加','修改')}</h3>
+        </div>
+        <div class="box-body">
+          <form class="form-horizontal js-ajax-form" action="/console/user/merge" method="post">
+            <input type="hidden" name="id" id="id" value="${user.id!}"/>
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">员工编号</label>
+              <div class="col-sm-10">
+                <input type="text" disabled class="form-control" value="${user.serialNumber!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">用户名</label>
+              <div class="col-sm-10">
+                <input type="text" name="username" class="form-control" id="username" value="${user.username!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">姓名</label>
+              <div class="col-sm-10">
+                <input type="text" name="name" class="form-control" value="${user.name!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">电话</label>
+              <div class="col-sm-10">
+                <input type="text" name="phone" class="form-control" value="${user.phone!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">邮箱</label>
+              <div class="col-sm-10">
+                <input type="email" name="email" class="form-control" value="${user.email!}"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">基本薪资</label>
+              <div class="col-sm-10">
+                <input type="number" name="salary" class="form-control" value="${user.salary!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">密码</label>
+              <div class="col-sm-10">
+                <input type="password" name="password" class="form-control" id="password"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">状态</label>
+              <div class="col-sm-10">
+                <select name="state" class="form-control" id="state">
+                  <option <#if user.state! == "ACTIVATION">selected</#if> value="ACTIVATION">正常</option>
+                  <option <#if user.state! == "LOCKING">selected</#if> value="LOCKING">锁定</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">职位</label>
+              <div class="col-sm-10">
+                <#list roleList as role>
+                  <label class="radio-inline">
+                    <input type="radio" name="roleIds" <#if checkRoleId?contains(role.id?string)>checked</#if>
+                           value="${role.id}">${role.name!}
+                  </label>
+                </#list>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">提交</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<#include "../common/footer.html"/>
+</body>
+</html>

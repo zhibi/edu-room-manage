@@ -1,0 +1,64 @@
+server:
+  servlet:
+    # session最大超时时间(分钟)，默认为30
+    session:
+      timeout: 60m
+#日志配置
+logging:
+  path: logback-spring.xml
+
+spring:
+  application:
+    name: edu-hrm
+  profiles:
+    #默认启动模式
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  #MVC配置
+  freemarker:
+    prefix:
+    suffix: .html
+    template-loader-path: ["classpath:/templates/"]
+    settings:
+      number_format: '0.##'   #数字格式化，无小数点
+
+  # 使用druid数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    dbcp2:
+      test-while-idle: false
+      validation-query: SELECT 'x'
+  #json配置
+  jackson:
+    time-zone: Asia/Chongqing
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+#mybaties配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+#mapper配置
+mapper:
+  not-empty: false
+  mappers: edu.room.manage.common.CustomerMapper
+  enum-as-simple-type: true
+
+fast:
+  upload:
+    path: D:\Project-Upload\
+  generate:
+    packageConfig:
+      parent: edu.hrm
+    strategy:
+      sync: entity_to_database
+
+    global:
+      generatorFile: false
+      outputDir: F://generate//
+      enable: true
+    dataSource:
+      delOverColumn: true

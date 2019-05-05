@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">菜单${(!menu.id??)?string('添加','修改')}</h3>
+        </div>
+        <div class="box-body">
+          <form class="form-horizontal js-ajax-form" action="/console/menu/merge" method="post">
+            <input type="hidden" name="id" value="${menu.id!}"/>
+            <input type="hidden" name="parentId" value="${menu.parentId!}"/>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">资源类型</label>
+              <div class="col-sm-10">
+                <select name="type" class="form-control">
+                  <option value="MENU" <#if menu.type! == 'MENU'>selected</#if>>菜单</option>
+                  <option value="AUTH" <#if menu.type! == 'AUTH'>selected</#if>>菜单+权限</option>
+                  <option value="BUTTON" <#if menu.type! == 'BUTTON'>selected</#if>>按钮</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="menuName" class="col-sm-2 control-label">菜单名称</label>
+              <div class="col-sm-10">
+                <input type="text" name="name" class="form-control" value="${menu.name!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="menuCode" class="col-sm-2 control-label">标识</label>
+              <div class="col-sm-10">
+                <input type="text" name="code" class="form-control" value="${menu.code!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="menuUrl" class="col-sm-2 control-label">URL</label>
+              <div class="col-sm-10">
+                <input type="text" name="url" class="form-control"  value="${menu.url!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="menuUrl" class="col-sm-2 control-label">图标</label>
+              <div class="col-sm-10">
+                <input type="text" name="icon" class="form-control"  value="${menu.icon!}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default js-ajax-submit">提交</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<#include "../common/footer.html"/>
+</body>
+</html>
