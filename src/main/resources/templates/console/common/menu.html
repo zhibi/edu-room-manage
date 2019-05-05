@@ -1,63 +1,23 @@
 <ul class="sidebar-menu">
   <li class="header">控制面板</li>
   <li class="treeview">
-    <a href="/console/info" target="mainFrame">
+    <a href="/console/main" target="mainFrame">
       <i class="fa fa-dashboard"></i>
-      <b>个人信息</b>
+      <b>控制台</b>
     </a>
   </li>
   <li class="treeview">
-    <a href="/console/approval/me" target="mainFrame">
+    <a href="#">
       <i class="fa fa-dashboard"></i>
-      <b>我的审批</b>
+      <b>用户管理</b>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
     </a>
+    <ul class="treeview-menu">
+      <li>
+        <a href="/console/user/index" target="mainFrame">用户列表</a>
+      </li>
+    </ul>
   </li>
-  <#list menuList as menu>
-    <#if menu.children?? && menu.children?size gt 0>
-      <li class="treeview">
-        <a href="#">
-          <i class="${menu.icon!}"></i>
-          <b>${menu.name}</b>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <#list menu.children as item>
-            <#if item.children?? && item.children?size gt 0>
-              <li class="treeview">
-              <a href="#">
-                <i class="${item.icon!}"></i>
-                <b>${item.name}</b>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <#list item.children as node>
-                  <li>
-                    <a href="${node.url}" target="mainFrame"><i class="${node.icon!}"></i>
-                      <b>${node.name!}</b></a>
-                  </li>
-                </#list>
-              </ul>
-            <#else>
-              <li>
-                <a href="${item.url}" target="mainFrame"><i class="${item.icon!}"></i>
-                  <b>${item.name!}</b></a>
-              </li>
-            </#if>
-
-          </#list>
-        </ul>
-      </li>
-    <#else>
-      <li class="treeview">
-        <a href="${menu.url!}" target="mainFrame">
-          <i class="${menu.icon!}"></i>
-          <b>${menu.name!}</b>
-        </a>
-      </li>
-    </#if>
-  </#list>
 </ul>

@@ -4,7 +4,11 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.context.Constant;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.utils.Md5Utils;
+import edu.room.manage.domain.Floor;
+import edu.room.manage.domain.Room;
 import edu.room.manage.domain.User;
+import edu.room.manage.mapper.FloorMapper;
+import edu.room.manage.mapper.RoomMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.UserService;
 import edu.room.manage.valid.ValidUser;
@@ -32,9 +36,13 @@ public class HomeController extends BaseController {
 
 
     @Autowired
-    private UserMapper        userMapper;
+    private UserMapper  userMapper;
     @Autowired
-    private UserService       userService;
+    private UserService userService;
+    @Autowired
+    private RoomMapper  roomMapper;
+    @Autowired
+    private FloorMapper floorMapper;
 
     /**
      * 首页
@@ -69,6 +77,8 @@ public class HomeController extends BaseController {
         Integer             userCount = userMapper.selectCount(new User());
         Map<String, Object> mp        = new HashMap<>(4);
         mp.put("userCount", userCount);
+        mp.put("roomCount", roomMapper.selectCount(new Room()));
+        mp.put("floorCount", floorMapper.selectCount(new Floor()));
         return mp;
     }
 
