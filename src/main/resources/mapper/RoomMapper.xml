@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.room.manage.mapper.RoomMapper">
+    <select id="selectDto" resultType="edu.room.manage.dto.RoomDTO">
+        select r.*,u.name username,f.name floorName from room r
+        left join user u on u.id = r.user_id
+        left join floor f on f.id = r.floor_id
+        <include refid="BaseMapper.Example_Where_Clause"/>
+        <include refid="BaseMapper.Order_Sql_Clause"/>
+    </select>
+</mapper>

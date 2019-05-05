@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+<section class="content-header">
+  <h1>教室管理</h1>
+</section>
+<section class="content table-content">
+  <#include "../common/messageTip.html"/>
+  <table id="dataGrid"></table>
+</section>
+<div id="toolbar">
+  <form role="form" id="searchForm" class="form-inline">
+    <div class="input-group">
+      <span class="input-group-addon">名字</span>
+      <input type="text" class="form-control" name="name">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon">辅导员名字</span>
+      <input type="text" class="form-control" name="userName">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon">教学楼名字</span>
+      <input type="text" class="form-control" name="floorName">
+    </div>
+    <div>
+      <button type="button" id="searchBtn" class="btn btn-primary">查询</button>
+      <button type="reset" class="btn btn-warning">清空</button>
+    </div>
+  </form>
+  <a href="/console/room/detail/0" class="btn btn-primary">添加教室</a>
+</div>
+<#include "../common/footer.html"/>
+<#include "../common/bootstrap-table.html"/>
+</body>
+<script type="text/javascript">
+    /**
+     * 表单初始化
+     */
+    $(function () {
+        initDataGrid('/console/room/list', [
+            {
+                title: "序号", field: "id", formatter: function (value, row, index) {
+                    //获取每页显示的数量
+                    var pageSize = $table.bootstrapTable('getOptions').pageSize;
+                    //获取当前是第几页
+                    var pageNumber = $table.bootstrapTable('getOptions').pageNumber;
+                    //返回序号，注意index是从0开始的，所以要加上1
+                    return pageSize * (pageNumber - 1) + index + 1;
+                }
+            },
+            {title: "名字", field: "name"},
+            {title: "辅导员", field: "userName"},
+            {title: "教学楼", field: "floorName"},
+            {title: "周一", field: "week1", formatter: getClass},
+            {title: "周二", field: "week2", formatter: getClass},
+            {title: "周三", field: "week3", formatter: getClass},
+            {title: "周四", field: "week4", formatter: getClass},
+            {title: "周五", field: "week5", formatter: getClass},
+            {title: "周六", field: "week6", formatter: getClass},
+            {title: "周日", field: "week7", formatter: getClass},
+            {title: "添加时间", field: "createTime"},
+            {title: "操作", field: "operate", align: 'center', events: operateEvents, formatter: operateFormatter}
+        ]);
+    });
+
+
+    function getClass(value, row, index) {
+        var content = "";
+        if (value.indexOf("1") !== -1) {
+            content += "上午第一大节 "
+        }
+        if (value.indexOf("2") !== -1) {
+            content += "上午第二大节 "
+        }
+        if (value.indexOf("3") !== -1) {
+            content += "下午第一大节 "
+        }
+        if (value.indexOf("4") !== -1) {
+            content += "下午第二大节 "
+        }
+        return content;
+    }
+
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a href="/console/room/detail/' + row.id + '" >',
+            '   <i class="glyphicon glyphicon-edit"></i>修改',
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0);">',
+            '   <i class="glyphicon glyphicon-remove"></i>删除',
+            '</a>'
+        ].join('');
+    }
+
+    window.operateEvents = {
+        'click .remove': function (e, value, row, index) {
+            operaModel.delRow(row.id, '/console/room/delete', 'id');
+        }
+    };
+</script>
+</html>
