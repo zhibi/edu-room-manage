@@ -48,7 +48,7 @@
             {title: "备注", field: "remark"},
             {title: "添加时间", field: "createTime"},
             {title: "更新时间", field: "updateTime"},
-            {title: "操作", field: "operate", align: 'center', formatter: operateFormatter}
+            {title: "操作", field: "operate", align: 'center', events: operateEvents,formatter: operateFormatter}
         ]);
     });
 
@@ -57,8 +57,17 @@
         return [
             '<a href="/console/floor/detail/' + row.id + '" >',
             '   <i class="glyphicon glyphicon-edit"></i>修改',
-            '</a>  '
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0);">',
+            '   <i class="glyphicon glyphicon-remove"></i>删除',
+            '</a>'
         ].join('');
     }
+
+    window.operateEvents = {
+        'click .remove': function (e, value, row, index) {
+            operaModel.delRow(row.id, '/console/floor/delete', 'id');
+        }
+    };
 </script>
 </html>

@@ -78,7 +78,15 @@ public class FloorController extends BaseController {
             throw new MessageException(result.getAllErrors().get(0).getDefaultMessage());
         }
         floorService.merge(floor);
-        return refresh("修改成功", attributes);
+        return redirect("/console/floor/index","修改成功", attributes);
+    }
 
+
+    @Operation("删除用户")
+    @RequestMapping(value = "/delete", method = {RequestMethod.GET})
+    @ResponseBody
+    public ModelMap delete(Integer id) {
+        floorMapper.deleteByPrimaryKey(id);
+        return ReturnUtils.success("删除成功", null, null);
     }
 }
