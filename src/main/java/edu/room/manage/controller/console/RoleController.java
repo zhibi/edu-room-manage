@@ -4,17 +4,11 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.utils.ReturnUtils;
-import edu.room.manage.domain.Menu;
 import edu.room.manage.domain.Role;
-import edu.room.manage.domain.RoleMenu;
-import edu.room.manage.dto.MenuTree;
-import edu.room.manage.mapper.MenuMapper;
 import edu.room.manage.mapper.RoleMapper;
-import edu.room.manage.mapper.RoleMenuMapper;
 import edu.room.manage.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 部门职位管理
@@ -39,10 +32,7 @@ public class RoleController extends BaseController {
     private RoleService    roleService;
     @Autowired
     private RoleMapper     roleMapper;
-    @Autowired
-    private MenuMapper     menuMapper;
-    @Autowired
-    private RoleMenuMapper roleMenuMapper;
+
 
 
     @Operation("查看部门")
@@ -104,43 +94,5 @@ public class RoleController extends BaseController {
         return "console/role/grant";
     }
 
-    @Operation("职位授权")
-    @RequestMapping(value = "/grant", method = {RequestMethod.POST})
-    @ResponseBody
-    @Transactional(rollbackFor = Exception.class)
-    public ModelMap grant(Integer roleId, String[] menuIds) {
-        try {
-            roleMenuMapper.delete(new RoleMenu().setRoleId(roleId));
-            if (menuIds != null && roleId != null) {
-                for (String menuId : menuIds) {
-                    RoleMenu roleMenu = new RoleMenu();
-                    roleMenu.setMenuId(Integer.parseInt(menuId));
-                    roleMenu.setRoleId(roleId);
-                    roleMenuMapper.insertSelective(roleMenu);
-                }
-            }
-            return ReturnUtils.success("操作成功", null, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ReturnUtils.error("操作失败", null, null);
-        }
-    }
 
-    /**
-     * 分配权限树
-     *
-     * @param roleId
-     * @return
-     */
-    @RequestMapping(value = "/menutree", method = {RequestMethod.POST, RequestMethod.GET})
-    @ResponseBody
-    public ModelMap comboTree(Integer roleId) {
-        List<Menu> menuLists = menuMapper.selectAll();
-        RoleMenu   roleMenu  = new RoleMenu();
-        roleMenu.setRoleId(roleId);
-        List<RoleMenu>            roleMenuLists = roleMenuMapper.select(roleMenu);
-        MenuTree                  menuTreeUtil  = new MenuTree(menuLists, roleMenuLists);
-        List<Map<String, Object>> mapList       = menuTreeUtil.buildTree();
-        return ReturnUtils.success(null, mapList, null);
-    }
 }

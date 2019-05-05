@@ -3,9 +3,7 @@ package edu.room.manage.domain;
 import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 /**
  * 部门 && 职位
@@ -38,8 +36,5 @@ public class Role extends BaseDomain {
      */
     private Boolean enable;
 
-
-    @Transient
-    private List<Menu> menuList;
 
 }

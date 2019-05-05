@@ -4,10 +4,8 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.context.Constant;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.utils.Md5Utils;
-import edu.room.manage.domain.Menu;
 import edu.room.manage.domain.Role;
 import edu.room.manage.domain.User;
-import edu.room.manage.mapper.MenuMapper;
 import edu.room.manage.mapper.RoleMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.UserService;
@@ -34,8 +32,7 @@ import java.util.Map;
 @Slf4j
 public class HomeController extends BaseController {
 
-    @Autowired
-    private MenuMapper        menuMapper;
+
     @Autowired
     private UserMapper        userMapper;
     @Autowired
@@ -75,11 +72,9 @@ public class HomeController extends BaseController {
     private Map<String, Object> getTotal() {
         Integer             userCount = userMapper.selectCount(new User());
         Integer             roleCount = roleMapper.selectCount(new Role());
-        Integer             menuCount = menuMapper.selectCount(new Menu());
         Map<String, Object> mp        = new HashMap<>(4);
         mp.put("userCount", userCount);
         mp.put("roleCount", roleCount);
-        mp.put("menuCount", menuCount);
         return mp;
     }
 
