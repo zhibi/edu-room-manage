@@ -1,4 +1,4 @@
-package edu.eat.order.config.interceptor;
+package edu.room.manage.common.config.interceptor;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

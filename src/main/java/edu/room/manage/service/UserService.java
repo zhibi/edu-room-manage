@@ -16,4 +16,15 @@ public interface UserService extends BaseService<User> {
      * @param split
      */
     void updateOrSaveUser(User user, String[] split);
+
+    /**
+     * 用户登录
+     *
+     * @param username
+     * @param password
+     * @param role     用户类型
+     * @return
+     */
+    User login(String username, String password, User.UserRoleEnum role);
+
 }

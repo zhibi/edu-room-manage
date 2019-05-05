@@ -1,4 +1,4 @@
-package edu.hrm.common.utils;
+package edu.room.manage.common.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;

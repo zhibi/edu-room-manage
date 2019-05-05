@@ -9,7 +9,7 @@ logging:
 
 spring:
   application:
-    name: edu-hrm
+    name: edu-home-manage
   profiles:
     #默认启动模式
     active: dev

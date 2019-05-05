@@ -5,7 +5,6 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.utils.ReturnUtils;
-import edu.room.manage.common.utils.ShiroUtils;
 import edu.room.manage.domain.Role;
 import edu.room.manage.domain.User;
 import edu.room.manage.domain.UserRole;
@@ -112,7 +111,7 @@ public class UserController extends BaseController {
                 user.setIcon(path);
             }
             userService.updateOrSaveUser(user, roleIds.split(","));
-            if (user.getId().equals(ShiroUtils.getUserInfo().getId())) {
+            if (user.getId().equals(loginAdmin().getId())) {
                 session.setAttribute(Constant.SESSION_USER, user);
             }
             return refresh("修改成功", attributes);

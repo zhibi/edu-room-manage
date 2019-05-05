@@ -1,8 +1,8 @@
-package edu.hrm.mapper;
+package edu.room.manage.mapper;
 
-import edu.hrm.domain.UserRole;
+import edu.room.manage.domain.UserRole;
 import org.apache.ibatis.annotations.Mapper;
-import edu.hrm.common.CustomerMapper;
+import edu.room.manage.common.CustomerMapper;
 
 /**
  * @author 执笔

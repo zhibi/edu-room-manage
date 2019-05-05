@@ -1,4 +1,4 @@
-package edu.hrm.common.mybatis.condition;
+package edu.room.manage.common.mybatis.condition;
 
 import lombok.Getter;
 

@@ -4,7 +4,7 @@ spring:
     name: edu-hrm
     username: leibees
     password: leibees
-    url: jdbc:mysql://120.27.24.193:3306/edu-hrm?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    url: jdbc:mysql://120.27.24.193:3306/edu-home-manage?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
 server:
   port: 80
 

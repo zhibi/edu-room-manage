@@ -17,10 +17,10 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableConfigurationProperties
 @EnableTransactionManagement
 @MapperScan("edu.hrm.mapper")
-public class EduHrmApplication {
+public class HomeManageApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EduHrmApplication.class, args);
+        SpringApplication.run(HomeManageApplication.class, args);
     }
 
 }

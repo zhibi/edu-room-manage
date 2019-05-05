@@ -1,4 +1,4 @@
-package edu.hrm.common.exception;
+package edu.room.manage.common.exception;
 
 /**
  * @author 执笔

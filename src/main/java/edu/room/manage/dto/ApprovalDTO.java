@@ -1,6 +1,6 @@
-package edu.hrm.dto;
+package edu.room.manage.dto;
 
-import edu.hrm.domain.Approval;
+import edu.room.manage.domain.Approval;
 import lombok.Data;
 
 /**

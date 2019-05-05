@@ -1,4 +1,4 @@
-package edu.hrm.common.annotation;
+package edu.room.manage.common.annotation;
 
 import java.lang.annotation.*;
 
@@ -15,4 +15,11 @@ public @interface Operation {
      * 操作
      */
     String value();
+
+    /**
+     * 是否需要登录
+     *
+     * @return
+     */
+    boolean needLogin() default false;
 }

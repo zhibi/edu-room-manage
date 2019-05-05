@@ -1,6 +1,6 @@
-package edu.hrm.service.impl;
+package edu.room.manage.service.impl;
 
-import edu.hrm.service.FileUploadService;
+import edu.room.manage.service.FileUploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;

@@ -1,8 +1,8 @@
-package edu.hrm.domain;
+package edu.room.manage.domain;
 
+import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import edu.hrm.common.base.dto.BaseDomain;
 
 import javax.persistence.Column;
 import javax.persistence.Table;

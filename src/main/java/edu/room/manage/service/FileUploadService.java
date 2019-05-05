@@ -1,4 +1,4 @@
-package edu.hrm.service;
+package edu.room.manage.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

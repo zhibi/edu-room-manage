@@ -1,4 +1,4 @@
-package edu.hrm.common.context;
+package edu.room.manage.common.context;
 
 /**
  * 环境变量

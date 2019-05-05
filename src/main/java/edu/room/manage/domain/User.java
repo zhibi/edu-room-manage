@@ -1,6 +1,6 @@
-package edu.hrm.domain;
+package edu.room.manage.domain;
 
-import edu.hrm.common.base.dto.BaseDomain;
+import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -31,7 +31,7 @@ public class User extends BaseDomain implements Serializable {
      */
     private UserStateEnum state;
 
-    private UserTypeEnum type;
+    private UserRoleEnum role;
 
 
     // 个人信息
@@ -69,7 +69,7 @@ public class User extends BaseDomain implements Serializable {
         LOCKING;
     }
 
-    public enum UserTypeEnum {
+    public enum UserRoleEnum {
 
         /**
          * 管理员

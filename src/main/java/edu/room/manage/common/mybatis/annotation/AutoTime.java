@@ -1,4 +1,4 @@
-package edu.hrm.common.mybatis.annotation;
+package edu.room.manage.common.mybatis.annotation;
 
 import java.lang.annotation.*;
 

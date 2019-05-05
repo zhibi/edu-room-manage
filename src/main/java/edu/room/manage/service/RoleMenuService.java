@@ -1,7 +1,7 @@
-package edu.hrm.service;
+package edu.room.manage.service;
 
-import edu.hrm.common.base.service.BaseService;
-import edu.hrm.domain.RoleMenu;
+import edu.room.manage.common.base.service.BaseService;
+import edu.room.manage.domain.RoleMenu;
 
 /**
  * @author 执笔

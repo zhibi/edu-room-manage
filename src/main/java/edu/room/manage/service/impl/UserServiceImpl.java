@@ -1,17 +1,16 @@
-package edu.hrm.service.impl;
+package edu.room.manage.service.impl;
 
-import edu.hrm.common.base.service.BaseServiceImpl;
-import edu.hrm.common.exception.MessageException;
-import edu.hrm.common.mybatis.condition.MybatisCondition;
-import edu.hrm.common.utils.PasswordUtils;
-import edu.hrm.domain.User;
-import edu.hrm.domain.UserRole;
-import edu.hrm.mapper.UserMapper;
-import edu.hrm.mapper.UserRoleMapper;
-import edu.hrm.service.UserService;
+import edu.room.manage.common.base.service.BaseServiceImpl;
+import edu.room.manage.common.exception.MessageException;
+import edu.room.manage.common.mybatis.condition.MybatisCondition;
+import edu.room.manage.common.utils.Md5Utils;
+import edu.room.manage.domain.User;
+import edu.room.manage.domain.UserRole;
+import edu.room.manage.mapper.UserMapper;
+import edu.room.manage.mapper.UserRoleMapper;
+import edu.room.manage.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,12 +38,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
             if (StringUtils.isEmpty(user.getPassword())) {
                 throw new MessageException("密码不能为空");
             }
-            String salt = new SecureRandomNumberGenerator().nextBytes().toHex();
-            user.setSalt(salt);
-            String password = PasswordUtils.createPwd(user.getPassword(), salt);
+            String password = Md5Utils.encode(user.getPassword());
             user.setPassword(password);
             user.setState(User.UserStateEnum.ACTIVATION);
-            user.setType(User.UserTypeEnum.USER);
+            user.setRole(User.UserRoleEnum.USER);
             user.setSerialNumber(RandomStringUtils.randomNumeric(6));
             userMapper.insertSelective(user);
         } else {
@@ -52,11 +49,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
             if (exist) {
                 throw new MessageException("用户名已存在");
             }
-            exist = isExist(new MybatisCondition().eq("serial_Number", user.getSerialNumber()).eqNot("id", user.getId()));
             User updateUser = userMapper.selectByPrimaryKey(user.getId());
             if (null != updateUser) {
                 if (StringUtils.isNotBlank(user.getPassword())) {
-                    String password = PasswordUtils.createPwd(user.getPassword(), updateUser.getSalt());
+                    String password = Md5Utils.encode(user.getPassword());
                     user.setPassword(password);
                 } else {
                     user.setPassword(null);
@@ -76,5 +72,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
                 userRoleMapper.insertSelective(userRole);
             }
         }
+    }
+
+    @Override
+    public User login(String username, String password, User.UserRoleEnum role) {
+        User user = new User();
+        user.setRole(role);
+        user.setUsername(username);
+        user.setPassword(Md5Utils.encode(password));
+        return userMapper.selectOne(user);
     }
 }

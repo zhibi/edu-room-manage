@@ -1,8 +1,8 @@
-package edu.hrm.mapper;
+package edu.room.manage.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import edu.hrm.common.CustomerMapper;
-import edu.hrm.domain.Log;
+import edu.room.manage.common.CustomerMapper;
+import edu.room.manage.domain.Log;
 
 /**
  * @author 执笔

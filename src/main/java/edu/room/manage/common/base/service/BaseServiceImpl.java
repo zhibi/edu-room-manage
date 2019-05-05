@@ -1,10 +1,10 @@
-package edu.hrm.common.base.service;
+package edu.room.manage.common.base.service;
 
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import edu.hrm.common.base.dto.BaseDomain;
-import edu.hrm.common.mybatis.condition.MybatisCondition;
+import edu.room.manage.common.base.dto.BaseDomain;
+import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 

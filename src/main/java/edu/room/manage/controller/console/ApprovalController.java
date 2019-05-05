@@ -1,15 +1,15 @@
-package edu.hrm.controller.console;
+package edu.room.manage.controller.console;
 
 import com.github.pagehelper.PageInfo;
-import edu.hrm.common.annotation.Operation;
-import edu.hrm.common.controller.BaseController;
-import edu.hrm.common.exception.MessageException;
-import edu.hrm.common.mybatis.condition.MybatisCondition;
-import edu.hrm.common.utils.ReturnUtils;
-import edu.hrm.domain.Approval;
-import edu.hrm.dto.ApprovalDTO;
-import edu.hrm.mapper.ApprovalMapper;
-import edu.hrm.service.ApprovalService;
+import edu.room.manage.common.annotation.Operation;
+import edu.room.manage.common.controller.BaseController;
+import edu.room.manage.common.exception.MessageException;
+import edu.room.manage.common.mybatis.condition.MybatisCondition;
+import edu.room.manage.common.utils.ReturnUtils;
+import edu.room.manage.domain.Approval;
+import edu.room.manage.dto.ApprovalDTO;
+import edu.room.manage.mapper.ApprovalMapper;
+import edu.room.manage.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,6 +1,6 @@
-package edu.hrm.domain;
+package edu.room.manage.domain;
 
-import edu.hrm.common.base.dto.BaseDomain;
+import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

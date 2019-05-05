@@ -1,4 +1,4 @@
-package edu.eat.order.config.interceptor;
+package edu.room.manage.common.config.interceptor;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -22,7 +22,7 @@ public class ConsoleInterceptor implements HandlerInterceptor {
         Object attribute = request.getSession().getAttribute(SESSION_ADMIN);
         String contextPath = request.getContextPath();
         if (null == attribute) {
-            response.sendRedirect(contextPath + "/admin/login");
+            response.sendRedirect(contextPath + "/console/login");
             return false;
         }
         return true;

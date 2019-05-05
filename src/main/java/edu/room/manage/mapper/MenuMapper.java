@@ -1,8 +1,8 @@
-package edu.hrm.mapper;
+package edu.room.manage.mapper;
 
+import edu.room.manage.domain.Menu;
 import org.apache.ibatis.annotations.Mapper;
-import edu.hrm.common.CustomerMapper;
-import edu.hrm.domain.Menu;
+import edu.room.manage.common.CustomerMapper;
 
 import java.util.List;
 import java.util.Set;

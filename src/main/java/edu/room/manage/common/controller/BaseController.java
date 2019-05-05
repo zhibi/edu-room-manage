@@ -1,7 +1,8 @@
-package edu.hrm.common.controller;
+package edu.room.manage.common.controller;
 
 
-import edu.hrm.common.context.Constant;
+import edu.room.manage.common.context.Constant;
+import edu.room.manage.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,5 +58,23 @@ public abstract class BaseController implements Constant {
     protected String refresh(String message, RedirectAttributes attributes) {
         attributes.addFlashAttribute(ERROR_MESSAGE, message);
         return "redirect:" + request.getHeader("Referer");
+    }
+
+    /**
+     * 获取登录的用户
+     *
+     * @return
+     */
+    protected User loginUser() {
+        return (User) session.getAttribute(SESSION_USER);
+    }
+
+    /**
+     * 获取登录的管理员
+     *
+     * @return
+     */
+    protected User loginAdmin() {
+        return (User) session.getAttribute(SESSION_ADMIN);
     }
 }
