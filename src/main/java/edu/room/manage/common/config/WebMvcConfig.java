@@ -33,8 +33,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(consoleInterceptor)
-                .addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login", "/admin/logout");
+                .addPathPatterns("/console/**")
+                .excludePathPatterns("/console/login", "/console/logout");
 
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
