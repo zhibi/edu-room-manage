@@ -50,7 +50,7 @@ mapper:
 fast:
   generate:
     packageConfig:
-      parent: edu.hrm
+      parent: edu.room.manage
     strategy:
       sync: entity_to_database
 

@@ -5,11 +5,14 @@
 
     <!--删除用户和用户关联表-->
     <delete id="deleteById">
-        delete from user_role where user_id = #{id};
-        delete from user where id = #{id};
+        delete
+        from user
+        where id = #{id};
     </delete>
     <select id="selectByUsername" resultType="edu.room.manage.domain.User">
-         select * from user where username = #{uername};
+        select *
+        from user
+        where username = #{uername};
     </select>
 
 </mapper>
