@@ -48,8 +48,6 @@ mapper:
   enum-as-simple-type: true
 
 fast:
-  upload:
-    path: D:\Project-Upload\
   generate:
     packageConfig:
       parent: edu.hrm
@@ -57,7 +55,7 @@ fast:
       sync: entity_to_database
 
     global:
-      generatorFile: false
+      generatorFile: true
       outputDir: F://generate//
       enable: true
     dataSource:

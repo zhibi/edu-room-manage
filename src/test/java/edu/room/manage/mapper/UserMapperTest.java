@@ -23,7 +23,6 @@ public class UserMapperTest {
     public void insertAdmin() {
         User user = new User()
                 .setRole(User.UserRoleEnum.ADMIN)
-                .setState(User.UserStateEnum.ACTIVATION)
                 .setPassword(Md5Utils.encode("123456"))
                 .setUsername("admin");
         userMapper.insertSelective(user);

@@ -5,11 +5,8 @@ import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.common.utils.Md5Utils;
 import edu.room.manage.domain.User;
-import edu.room.manage.domain.UserRole;
 import edu.room.manage.mapper.UserMapper;
-import edu.room.manage.mapper.UserRoleMapper;
 import edu.room.manage.service.UserService;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +21,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Autowired
     private UserMapper     userMapper;
-    @Autowired
-    private UserRoleMapper userRoleMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateOrSaveUser(User user, String[] roleIds) {
+    public void updateOrSaveUser(User user) {
         if (user.getId() == null) {
             boolean exist = isExist(new MybatisCondition().eq("username", user.getUsername()));
             if (exist) {
@@ -40,9 +35,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
             }
             String password = Md5Utils.encode(user.getPassword());
             user.setPassword(password);
-            user.setState(User.UserStateEnum.ACTIVATION);
             user.setRole(User.UserRoleEnum.USER);
-            user.setSerialNumber(RandomStringUtils.randomNumeric(6));
             userMapper.insertSelective(user);
         } else {
             boolean exist = isExist(new MybatisCondition().eq("username", user.getUsername()).eqNot("id", user.getId()));
@@ -60,16 +53,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
                 userMapper.updateByPrimaryKeySelective(user);
             } else {
                 throw new MessageException("操作失败，用户不存在");
-            }
-        }
-        userRoleMapper.delete(new UserRole().setUserId(user.getId()));
-        if (roleIds != null) {
-            userRoleMapper.delete(new UserRole().setUserId(user.getId()));
-            for (String roleId : roleIds) {
-                UserRole userRole = new UserRole()
-                        .setUserId(user.getId())
-                        .setRoleId(Integer.parseInt(roleId));
-                userRoleMapper.insertSelective(userRole);
             }
         }
     }

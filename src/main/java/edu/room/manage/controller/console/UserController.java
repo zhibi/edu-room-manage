@@ -2,25 +2,26 @@ package edu.room.manage.controller.console;
 
 import com.github.pagehelper.PageInfo;
 import edu.room.manage.common.annotation.Operation;
+import edu.room.manage.common.context.Constant;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.utils.ReturnUtils;
-import edu.room.manage.domain.Role;
 import edu.room.manage.domain.User;
 import edu.room.manage.domain.UserRole;
-import edu.room.manage.mapper.RoleMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.mapper.UserRoleMapper;
 import edu.room.manage.service.FileUploadService;
 import edu.room.manage.service.RoleService;
 import edu.room.manage.service.UserService;
-import edu.room.manage.common.context.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,13 +38,12 @@ public class UserController extends BaseController {
 
 
     @Autowired
-    private UserService       userService;
+    private UserService    userService;
     @Autowired
-    private UserMapper        userMapper;
+    private UserMapper     userMapper;
     @Autowired
-    private UserRoleMapper    userRoleMapper;
-    @Autowired
-    private RoleMapper        roleMapper;
+    private UserRoleMapper userRoleMapper;
+
     @Autowired
     private RoleService       roleService;
     @Autowired
@@ -90,18 +90,13 @@ public class UserController extends BaseController {
     public ModelMap list(User user) {
         ModelMap       map      = new ModelMap();
         PageInfo<User> pageInfo = userService.selectPage(user);
-        for (User list : pageInfo.getList()) {
-            List<Role> roleList = roleMapper.selectRoleListByUserId(list.getId());
-            list.setRoleList(roleList);
-        }
         map.put("pageInfo", pageInfo);
-        map.put("queryParam", user);
         return ReturnUtils.success("加载成功", map, null);
     }
 
     @Operation("更新用户信息")
     @RequestMapping(value = "/merge", method = {RequestMethod.POST})
-    public String merge(@Valid User user, BindingResult result, @RequestParam(defaultValue = ",") String roleIds, RedirectAttributes attributes, MultipartFile file) {
+    public String merge(@Valid User user, BindingResult result, RedirectAttributes attributes, MultipartFile file) {
         try {
             if (result.hasErrors()) {
                 throw new MessageException(result.getAllErrors().get(0).getDefaultMessage());
@@ -110,7 +105,7 @@ public class UserController extends BaseController {
                 String path = fileUploadService.upload(file, "upload/user_icon");
                 user.setIcon(path);
             }
-            userService.updateOrSaveUser(user, roleIds.split(","));
+            userService.updateOrSaveUser(user);
             if (user.getId().equals(loginAdmin().getId())) {
                 session.setAttribute(Constant.SESSION_USER, user);
             }
