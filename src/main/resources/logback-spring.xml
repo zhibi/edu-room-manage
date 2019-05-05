@@ -16,7 +16,7 @@
 
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 保存日志文件的路径 -->
-        <file>${LOG_PATH}/${PROJECT_NAME}/project.log</file>
+        <file>${LOG_PATH}/${PROJECT_NAME}/project.room</file>
         <!-- 日志格式 -->
         <encoder>
             <pattern>${LOG_PATTERN_TWO}</pattern>
@@ -24,7 +24,7 @@
         <!-- 循环政策：基于时间创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${LOG_PATH}/${PROJECT_NAME}/%d{yyyy-MM-dd/yyyy-MM-dd-HH}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/${PROJECT_NAME}/%d{yyyy-MM-dd/yyyy-MM-dd-HH}.room</fileNamePattern>
         </rollingPolicy>
     </appender>
 

@@ -6,16 +6,16 @@ import lombok.Data;
 import javax.persistence.Column;
 
 /**
- * 操作日志
+ * 教室
  *
  * @author 执笔
  */
 @Data
-public class Log extends BaseDomain {
+public class Room extends BaseDomain {
 
-    private String user;
+    private String name;
 
-    private String ip;
+    private String address;
 
     private String action;
 
@@ -26,7 +26,7 @@ public class Log extends BaseDomain {
     private String data;
 
     /**
-     * 用户ID
+     * 辅导员ID
      */
     private Integer userId;
 }

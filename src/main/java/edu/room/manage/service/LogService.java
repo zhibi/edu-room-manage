@@ -1,13 +1,13 @@
 package edu.room.manage.service;
 
 import edu.room.manage.common.base.service.BaseService;
-import edu.room.manage.domain.Log;
+import edu.room.manage.domain.Room;
 import edu.room.manage.domain.User;
 
 /**
  * @author 执笔
  */
-public interface LogService extends BaseService<Log> {
+public interface LogService extends BaseService<Room> {
 
 
     /**

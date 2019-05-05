@@ -6,20 +6,20 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * 部门 && 职位
+ * 教学楼
  *
  * @author 执笔
  */
 @Data
-public class Role extends BaseDomain {
+public class Floor extends BaseDomain {
 
     @NotEmpty(message = "名称不能为空")
     private String name;
 
     /**
-     * 上级ID
+     * 楼长
      */
-    private Integer parentId;
+    private Integer userId;
 
     /**
      * 备注
@@ -27,14 +27,8 @@ public class Role extends BaseDomain {
     private String remark;
 
     /**
-     * 排序
+     * 位置
      */
-    private Integer sort;
-
-    /**
-     * 是否可用
-     */
-    private Boolean enable;
-
+    private String address;
 
 }

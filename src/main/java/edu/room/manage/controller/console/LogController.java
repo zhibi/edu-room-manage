@@ -3,7 +3,7 @@ package edu.room.manage.controller.console;
 import com.github.pagehelper.PageInfo;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.common.annotation.Operation;
-import edu.room.manage.domain.Log;
+import edu.room.manage.domain.Room;
 import edu.room.manage.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,16 +32,16 @@ public class LogController {
     /**
      * 异步加载list
      *
-     * @param log
+     * @param room
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
-    public ModelMap list(Log log) {
-        ModelMap      map      = new ModelMap();
-        PageInfo<Log> pageInfo = logService.selectPage(log);
+    public ModelMap list(Room room) {
+        ModelMap       map      = new ModelMap();
+        PageInfo<Room> pageInfo = logService.selectPage(room);
         map.put("pageInfo", pageInfo);
-        map.put("queryParam", log);
+        map.put("queryParam", room);
         return ReturnUtils.success("加载成功", map);
     }
 }
