@@ -4,16 +4,9 @@
 <body>
 <section class="content-header">
   <h1>用户管理</h1>
-  <small>列表管理</small>
 </section>
 <section class="content table-content">
-  <#if errorMessage??>
-    <div class="alert alert-success alert-dismissible fade in" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-      </button>
-      ${errorMessage!}
-    </div>
-  </#if>
+  <#include "../common/messageTip.html"/>
 
   <table id="dataGrid"></table>
 </section>
@@ -23,16 +16,12 @@
       <span class="input-group-addon">用户名</span>
       <input type="text" class="form-control" name="username">
     </div>
-    <div class="input-group">
-      <span class="input-group-addon">员工编号</span>
-      <input type="text" class="form-control" name="serialNumber">
-    </div>
-
     <div>
       <button type="button" id="searchBtn" class="btn btn-primary">查询</button>
       <button type="reset" class="btn btn-warning">清空</button>
     </div>
   </form>
+  <a href="/console/user/detail/0" class="btn btn-primary">添加用户</a>
 </div>
 <#include "../common/footer.html"/>
 <#include "../common/bootstrap-table.html"/>
@@ -54,26 +43,28 @@
                 }
             },
             {title: "用户Id", field: "id"},
-            {title: "员工编号", field: "serialNumber"},
             {title: "用户名", field: "username"},
             {title: "姓名", field: "name"},
             {title: "电话", field: "phone"},
             {title: "邮箱", field: "email"},
-            {title: "基本薪资", field: "salary"},
-            {title: "职位", field: "roleList", formatter: getRole},
-            {title: "注册时间", field: "createTime"},
+            {title: "用户类型", field: "roleList", formatter: getType},
+            {title: "添加时间", field: "createTime"},
             {title: "更新时间", field: "updateTime"},
             {title: "操作", field: "operate", align: 'center', events: operateEvents, formatter: operateFormatter}
         ]);
     });
 
-    function getRole(value, row, index) {
+    function getType(value, row, index) {
         if (row.type === "ADMIN") {
-            return "超级管理（不受角色限制）"
-        } else {
-            return $.map(value, function (v) {
-                return v.name;
-            }).join(",");
+            return "超级管理"
+        } else if (row.type === "STUDENT") {
+            return "学生";
+        } else if (row.type === "COUNSELOR") {
+            return "辅导员";
+        } else if (row.type === "LANDLORD") {
+            return "楼主";
+        } else if (row.type === "TEACHER") {
+            return "教师";
         }
 
     }
