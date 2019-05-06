@@ -37,7 +37,7 @@
     </appender>
 
 
-    <logger name="zhibi" level="DEBUG"/>
+    <logger name="edu" level="DEBUG"/>
 
     <root level="info">
         <appender-ref ref="file"/>

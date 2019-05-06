@@ -15,10 +15,7 @@ public class Room extends BaseDomain {
 
     private String address;
 
-    /**
-     * 辅导员ID
-     */
-    private Integer userId;
+
     /**
      * 所属教学楼
      */

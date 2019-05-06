@@ -34,6 +34,11 @@ public class Approval extends BaseDomain {
      */
     private String opinion2;
 
+    /**
+     * 预约时间
+     */
+    private String week;
+
     private ApprovalStatusEnum status;
 
 

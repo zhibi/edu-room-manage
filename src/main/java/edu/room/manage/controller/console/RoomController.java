@@ -7,11 +7,9 @@ import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.Room;
-import edu.room.manage.domain.User;
 import edu.room.manage.dto.RoomDTO;
 import edu.room.manage.mapper.FloorMapper;
 import edu.room.manage.mapper.RoomMapper;
-import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +36,6 @@ public class RoomController extends BaseController {
     @Autowired
     private RoomMapper  roomMapper;
     @Autowired
-    private UserMapper  userMapper;
-    @Autowired
     private FloorMapper floorMapper;
 
     @Operation("查看教学楼")
@@ -59,7 +55,6 @@ public class RoomController extends BaseController {
         }
         model.addAttribute("room", room);
         model.addAttribute("floorList", floorMapper.selectAll());
-        model.addAttribute("userList", userMapper.select(new User().setType(User.UserTypeEnum.COUNSELOR)));
         return "console/room/detail";
     }
 
@@ -88,7 +83,6 @@ public class RoomController extends BaseController {
         MybatisCondition condition = new MybatisCondition()
                 .like("r.name", room.getName())
                 .like("f.name", room.getFloorName())
-                .like("u.name", room.getUserName())
                 .page(room);
         PageInfo<RoomDTO> pageInfo = roomService.selectDtoPage(condition);
         map.put("pageInfo", pageInfo);

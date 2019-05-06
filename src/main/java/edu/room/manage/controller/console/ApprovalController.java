@@ -44,29 +44,6 @@ public class ApprovalController extends BaseController {
     }
 
     /**
-     * 我的审批列表
-     *
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/me", method = {RequestMethod.GET})
-    public String me(Model model) {
-        return "console/approval/me";
-    }
-
-
-    @Operation("审批详情")
-    @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
-    public String detail(@PathVariable Integer id, Model model) {
-        Approval approval = approvalMapper.selectByPrimaryKey(id);
-        if (null == approval) {
-            approval = new Approval();
-        }
-        model.addAttribute("approval", approval);
-        return "console/approval/detail";
-    }
-
-    /**
      * 异步加载列表
      *
      * @param approval
@@ -77,9 +54,7 @@ public class ApprovalController extends BaseController {
     public ModelMap list(ApprovalDTO approval) {
         ModelMap map = new ModelMap();
         MybatisCondition condition = new MybatisCondition()
-                .eq("u.id",approval.getUserId())
-                .like("u.name", approval.getUsername())
-                .like("u.Serial_Number", approval.getSerialNumber())
+                .like("u.name", approval.getUserName())
                 .order("a.id", false);
         PageInfo<ApprovalDTO> pageInfo = approvalService.selectDtoPage(condition);
         map.put("pageInfo", pageInfo);
@@ -98,6 +73,17 @@ public class ApprovalController extends BaseController {
         } catch (Exception e) {
             throw new MessageException(e.getMessage());
         }
+    }
+
+    @Operation("审批详情")
+    @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
+    public String detail(@PathVariable Integer id, Model model) {
+        Approval approval = approvalMapper.selectByPrimaryKey(id);
+        if (null == approval) {
+            approval = new Approval();
+        }
+        model.addAttribute("approval", approval);
+        return "console/approval/detail";
     }
 
 }

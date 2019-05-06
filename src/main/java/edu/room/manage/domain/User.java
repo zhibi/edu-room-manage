@@ -38,6 +38,11 @@ public class User extends BaseDomain implements Serializable {
      */
     private String icon;
 
+    /**
+     * 所属班级
+     */
+    private Integer classesId;
+
 
     public enum UserTypeEnum {
 

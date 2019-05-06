@@ -10,12 +10,27 @@ import lombok.Data;
 @Data
 public class ApprovalDTO extends Approval {
     /**
-     * 员工名
+     * 发起人
      */
-    private String username;
+    private String userName;
 
     /**
-     * 员工编号
+     * 一级审批人
      */
-    private String serialNumber;
+    private String opinionUser1;
+
+    /**
+     * 二级审批人
+     */
+    private String opinionUser2;
+
+    /**
+     * 教学楼
+     */
+    private String floorName;
+
+    /**
+     * 教室
+     */
+    private String roomName;
 }

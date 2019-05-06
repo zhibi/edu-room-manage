@@ -3,7 +3,7 @@
 <#include "../common/head.html"/>
 <body>
 <section class="content-header">
-  <h1>教学楼管理</h1>
+  <h1>班级管理</h1>
 </section>
 <section class="content table-content">
   <#include "../common/messageTip.html"/>
@@ -15,11 +15,14 @@
       <span class="input-group-addon">名字</span>
       <input type="text" class="form-control" name="name">
     </div>
-
+    <div class="input-group">
+      <span class="input-group-addon">辅导员名字</span>
+      <input type="text" class="form-control" name="userName">
+    </div>
     <div>
       <button type="button" id="searchBtn" class="btn btn-primary">查询</button>
       <button type="reset" class="btn btn-warning">清空</button>
-      <a href="/console/floor/detail/0" class="btn btn-primary">添加教学楼</a>
+      <a href="/console/classes/detail/0" class="btn btn-primary">添加班级</a>
     </div>
   </form>
 
@@ -32,7 +35,7 @@
      * 表单初始化
      */
     $(function () {
-        initDataGrid('/console/floor/list', [
+        initDataGrid('/console/classes/list', [
             {
                 title: "序号", field: "id", formatter: function (value, row, index) {
                     //获取每页显示的数量
@@ -44,19 +47,16 @@
                 }
             },
             {title: "名字", field: "name"},
-            {title: "楼主", field: "userName"},
-            {title: "位置", field: "address"},
-            {title: "备注", field: "remark"},
+            {title: "辅导员", field: "userName"},
             {title: "添加时间", field: "createTime"},
-            {title: "更新时间", field: "updateTime"},
-            {title: "操作", field: "operate", align: 'center', events: operateEvents,formatter: operateFormatter}
+            {title: "操作", field: "operate", align: 'center', events: operateEvents, formatter: operateFormatter}
         ]);
     });
 
 
     function operateFormatter(value, row, index) {
         return [
-            '<a href="/console/floor/detail/' + row.id + '" >',
+            '<a href="/console/classes/detail/' + row.id + '" >',
             '   <i class="glyphicon glyphicon-edit"></i>修改',
             '</a>  ',
             '<a class="remove" href="javascript:void(0);">',
@@ -67,7 +67,7 @@
 
     window.operateEvents = {
         'click .remove': function (e, value, row, index) {
-            operaModel.delRow(row.id, '/console/floor/delete', 'id');
+            operaModel.delRow(row.id, '/console/classes/delete', 'id');
         }
     };
 </script>
