@@ -12,7 +12,7 @@
 <div id="toolbar">
   <form role="form" id="searchForm" class="form-inline">
     <div class="input-group">
-      <span class="input-group-addon">名字</span>
+      <span class="input-group-addon">教室名</span>
       <input type="text" class="form-control" name="name">
     </div>
     <div class="input-group">
@@ -50,7 +50,7 @@
                     return pageSize * (pageNumber - 1) + index + 1;
                 }
             },
-            {title: "名字", field: "name"},
+            {title: "教室名", field: "name"},
             {title: "教学楼", field: "floorName"},
             {title: "楼层", field: "floor"},
             {title: "周一", field: "week1", formatter: getClass},
