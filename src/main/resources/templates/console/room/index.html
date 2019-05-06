@@ -19,6 +19,10 @@
       <span class="input-group-addon">教学楼名字</span>
       <input type="text" class="form-control" name="floorName">
     </div>
+    <div class="input-group">
+      <span class="input-group-addon">楼层</span>
+      <input type="text" class="form-control" name="floor">
+    </div>
     <div>
       <button type="button" id="searchBtn" class="btn btn-primary">查询</button>
       <button type="reset" class="btn btn-warning">清空</button>
@@ -48,6 +52,7 @@
             },
             {title: "名字", field: "name"},
             {title: "教学楼", field: "floorName"},
+            {title: "楼层", field: "floor"},
             {title: "周一", field: "week1", formatter: getClass},
             {title: "周二", field: "week2", formatter: getClass},
             {title: "周三", field: "week3", formatter: getClass},
@@ -74,6 +79,12 @@
         }
         if (value.indexOf("4") !== -1) {
             content += "下午第二大节 "
+        }
+        if (value.indexOf("5") !== -1) {
+            content += "晚上第一大节 "
+        }
+        if (value.indexOf("6") !== -1) {
+            content += "晚上第二大节 "
         }
         return content;
     }

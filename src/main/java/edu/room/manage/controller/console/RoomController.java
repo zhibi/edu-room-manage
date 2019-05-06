@@ -83,6 +83,7 @@ public class RoomController extends BaseController {
         MybatisCondition condition = new MybatisCondition()
                 .like("r.name", room.getName())
                 .like("f.name", room.getFloorName())
+                .like("f.floor", room.getFloor())
                 .page(room);
         PageInfo<RoomDTO> pageInfo = roomService.selectDtoPage(condition);
         map.put("pageInfo", pageInfo);

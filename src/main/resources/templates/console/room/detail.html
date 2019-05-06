@@ -37,12 +37,20 @@
               </div>
             </div>
             <div class="form-group">
+              <label class="col-sm-2 control-label">楼层</label>
+              <div class="col-sm-10">
+                <input type="text" name="floor" class="form-control" value="${room.floor!}"/>
+              </div>
+            </div>
+            <div class="form-group">
               <label class="col-sm-2 control-label">星期一</label>
               <div class="col-sm-10">
                 <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("1"?string)>checked</#if> value="1">上午第一大节</label>
-                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("2"?string)>checked</#if> value="1">上午第二大节</label>
-                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("3"?string)>checked</#if> value="1">下午第一大节</label>
-                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("4"?string)>checked</#if> value="1">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("2"?string)>checked</#if> value="2">上午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("3"?string)>checked</#if> value="3">下午第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("4"?string)>checked</#if> value="4">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("5"?string)>checked</#if> value="5">晚上第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week1" <#if room.week1!?contains("6"?string)>checked</#if> value="6">晚上第二大节</label>
               </div>
             </div>
             <div class="form-group">
@@ -52,6 +60,8 @@
                 <label class="checkbox-inline"><input type="checkbox" name="week2" <#if room.week2!?contains("2"?string)>checked</#if> value="2">上午第二大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week2" <#if room.week2!?contains("3"?string)>checked</#if> value="3">下午第一大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week2" <#if room.week2!?contains("4"?string)>checked</#if> value="4">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week2" <#if room.week1!?contains("5"?string)>checked</#if> value="5">晚上第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week2" <#if room.week1!?contains("6"?string)>checked</#if> value="6">晚上第二大节</label>
               </div>
             </div><div class="form-group">
               <label class="col-sm-2 control-label">星期三</label>
@@ -60,6 +70,8 @@
                 <label class="checkbox-inline"><input type="checkbox" name="week3" <#if room.week3!?contains("2"?string)>checked</#if> value="2">上午第二大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week3" <#if room.week3!?contains("3"?string)>checked</#if> value="3">下午第一大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week3" <#if room.week3!?contains("4"?string)>checked</#if> value="4">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week3" <#if room.week1!?contains("5"?string)>checked</#if> value="5">晚上第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week3" <#if room.week1!?contains("6"?string)>checked</#if> value="6">晚上第二大节</label>
               </div>
             </div><div class="form-group">
               <label class="col-sm-2 control-label">星期四</label>
@@ -68,6 +80,8 @@
                 <label class="checkbox-inline"><input type="checkbox" name="week4" <#if room.week4!?contains("2"?string)>checked</#if> value="2">上午第二大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week4" <#if room.week4!?contains("3"?string)>checked</#if> value="3">下午第一大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week4" <#if room.week4!?contains("4"?string)>checked</#if> value="4">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week4" <#if room.week1!?contains("5"?string)>checked</#if> value="5">晚上第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week4" <#if room.week1!?contains("6"?string)>checked</#if> value="6">晚上第二大节</label>
               </div>
             </div><div class="form-group">
               <label class="col-sm-2 control-label">星期五</label>
@@ -76,6 +90,8 @@
                 <label class="checkbox-inline"><input type="checkbox" name="week5" <#if room.week5!?contains("2"?string)>checked</#if> value="2">上午第二大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week5" <#if room.week5!?contains("3"?string)>checked</#if> value="3">下午第一大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week5" <#if room.week5!?contains("4"?string)>checked</#if> value="4">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week5" <#if room.week1!?contains("5"?string)>checked</#if> value="5">晚上第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week5" <#if room.week1!?contains("6"?string)>checked</#if> value="6">晚上第二大节</label>
               </div>
             </div><div class="form-group">
               <label class="col-sm-2 control-label">星期六</label>
@@ -84,6 +100,8 @@
                 <label class="checkbox-inline"><input type="checkbox" name="week6" <#if room.week6!?contains("2"?string)>checked</#if> value="2">上午第二大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week6" <#if room.week6!?contains("3"?string)>checked</#if> value="3">下午第一大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week6" <#if room.week6!?contains("4"?string)>checked</#if> value="4">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week6" <#if room.week1!?contains("5"?string)>checked</#if> value="5">晚上第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week6" <#if room.week1!?contains("6"?string)>checked</#if> value="6">晚上第二大节</label>
               </div>
             </div><div class="form-group">
               <label class="col-sm-2 control-label">星期日</label>
@@ -92,6 +110,8 @@
                 <label class="checkbox-inline"><input type="checkbox" name="week7" <#if room.week7!?contains("2"?string)>checked</#if> value="2">上午第二大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week7" <#if room.week7!?contains("3"?string)>checked</#if> value="3">下午第一大节</label>
                 <label class="checkbox-inline"><input type="checkbox" name="week7" <#if room.week7!?contains("4"?string)>checked</#if> value="4">下午第二大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week7" <#if room.week1!?contains("5"?string)>checked</#if> value="5">晚上第一大节</label>
+                <label class="checkbox-inline"><input type="checkbox" name="week7" <#if room.week1!?contains("6"?string)>checked</#if> value="6">晚上第二大节</label>
               </div>
             </div>
 

@@ -22,6 +22,11 @@ public class Room extends BaseDomain {
     private Integer floorId;
 
     /**
+     * 楼层
+     */
+    private String floor;
+
+    /**
      * 星期
      * 1 2 3 4
      */
