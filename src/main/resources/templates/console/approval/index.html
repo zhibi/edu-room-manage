@@ -38,7 +38,7 @@
      * 表单初始化
      */
     $(function () {
-        initDataGrid('/console/room/list', [
+        initDataGrid('/console/approval/list', [
             {
                 title: "序号", field: "id", formatter: function (value, row, index) {
                     //获取每页显示的数量
@@ -66,6 +66,7 @@
 
     function getClass(value, row, index) {
         var content = "";
+        value = value + ",";
         if (value.indexOf("1") !== -1) {
             content += "上午第一大节 "
         }

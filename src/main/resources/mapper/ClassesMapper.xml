@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="edu.room.manage.mapper.ClassesMapper">
     <select id="selectDto" resultType="edu.room.manage.dto.ClassesDTO">
-        select c.*,u.name usernmae from classes c
+        select c.*,u.name username from classes c
         left join user u on u.id = c.user_id
         <include refid="BaseMapper.Example_Where_Clause"/>
         <include refid="BaseMapper.Order_Sql_Clause"/>

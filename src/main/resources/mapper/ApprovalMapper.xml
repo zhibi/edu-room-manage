@@ -7,7 +7,7 @@
         left join user u on u.id = a.user_id
         left join room r on r.id = a.room_id
         left join classes c on c.id = u.classes_id
-        left join user u1 on u1.id = c.user_id and u.type == "student"
+        left join user u1 on u1.id = c.user_id and u.type = "student"
         left join floor f on f.id = r.floor_id
         left join user u2 on u2.id = f.user_id
         <include refid="BaseMapper.Example_Where_Clause"/>
