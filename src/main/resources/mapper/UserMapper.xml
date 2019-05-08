@@ -14,5 +14,12 @@
         from user
         where username = #{uername};
     </select>
+    <select id="selectCounselorByUser" resultType="edu.room.manage.domain.User">
+        select *
+        from user u
+                 left join classes c on c.user_id = u.id
+                 left join user u1 on u1.classes_id = c.id
+        where u1.id = #{userId}
+    </select>
 
 </mapper>

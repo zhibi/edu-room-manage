@@ -23,4 +23,11 @@ public interface UserMapper extends CustomerMapper<User> {
      * @param id
      */
     void deleteById(Integer id);
+
+    /**
+     * 得到用户的辅导员
+     * @param userId
+     * @return
+     */
+    User selectCounselorByUser(Integer userId);
 }

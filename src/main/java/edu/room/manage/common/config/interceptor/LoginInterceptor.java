@@ -8,7 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static edu.room.manage.common.context.Constant.SESSION_ADMIN;
+import static edu.room.manage.common.context.Constant.SESSION_USER;
 
 /**
  * 判断是否需要登录
@@ -18,7 +18,6 @@ import static edu.room.manage.common.context.Constant.SESSION_ADMIN;
  */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
-    private static final String SESSION_USER = SESSION_ADMIN;
 
 
     @Override
