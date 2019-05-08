@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="edu.room.manage.mapper.ApprovalMapper">
     <select id="selectDto" resultType="edu.room.manage.dto.ApprovalDTO">
-        select a.*,u.name username,u1.name opinionUser1,u2.name opinionUser2,f.name floorname,r.name roomname
+        select a.*,u.name username,u1.name opinionUser1,u2.name opinionUser2,f.name floorname,r.name roomname,r.scale ,r.floor
         from orders a
         left join user u on u.id = a.user_id
         left join room r on r.id = a.room_id
         left join classes c on c.id = u.classes_id
         left join user u1 on u1.id = c.user_id and u.type = "student"
-        left join floor f on f.id = r.floor_id
+        left join building f on f.id = r.floor_id
         left join user u2 on u2.id = f.user_id
         <include refid="BaseMapper.Example_Where_Clause"/>
         <include refid="BaseMapper.Order_Sql_Clause"/>

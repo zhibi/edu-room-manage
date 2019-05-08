@@ -33,4 +33,7 @@ public class ApprovalDTO extends Approval {
      * 教室
      */
     private String roomName;
+
+    private String scale;
+    private String floor;
 }

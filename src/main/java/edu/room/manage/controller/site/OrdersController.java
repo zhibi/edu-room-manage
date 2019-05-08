@@ -1,13 +1,18 @@
 package edu.room.manage.controller.site;
 
+import com.github.pagehelper.PageInfo;
 import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.controller.BaseController;
+import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.domain.Approval;
 import edu.room.manage.domain.User;
+import edu.room.manage.dto.ApprovalDTO;
 import edu.room.manage.mapper.ApprovalMapper;
 import edu.room.manage.mapper.UserMapper;
+import edu.room.manage.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +28,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class OrdersController extends BaseController {
 
     @Autowired
-    private ApprovalMapper approvalMapper;
+    private ApprovalMapper  approvalMapper;
     @Autowired
-    private UserMapper     userMapper;
+    private UserMapper      userMapper;
+    @Autowired
+    private ApprovalService approvalService;
 
     /**
      * 预约教室
@@ -51,5 +58,15 @@ public class OrdersController extends BaseController {
         } else {
             return refresh("您不是学生或者教师，不能预约", attributes);
         }
+    }
+
+    @GetMapping("me")
+    public String me(Model model) {
+        MybatisCondition condition = new MybatisCondition()
+                .eq("a.user_id", loginUser().getId())
+                .order("a.id", false);
+        PageInfo<ApprovalDTO> pageInfo = approvalService.selectDtoPage(condition);
+        model.addAttribute("ordersList", pageInfo.getList());
+        return "site/orders/me";
     }
 }
