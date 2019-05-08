@@ -3,7 +3,7 @@
 <mapper namespace="edu.room.manage.mapper.ApprovalMapper">
     <select id="selectDto" resultType="edu.room.manage.dto.ApprovalDTO">
         select a.*,u.name username,u1.name opinionUser1,u2.name opinionUser2,f.name floorname,r.name roomname
-        from approval a
+        from orders a
         left join user u on u.id = a.user_id
         left join room r on r.id = a.room_id
         left join classes c on c.id = u.classes_id

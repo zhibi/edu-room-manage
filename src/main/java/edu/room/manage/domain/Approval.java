@@ -3,11 +3,14 @@ package edu.room.manage.domain;
 import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 
+import javax.persistence.Table;
+
 /**
  * @author 执笔
  * @date 2019/5/3 14:45
  */
 @Data
+@Table(name = "orders")
 public class Approval extends BaseDomain {
 
     /**

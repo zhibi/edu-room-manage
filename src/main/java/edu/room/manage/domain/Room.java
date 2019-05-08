@@ -37,4 +37,14 @@ public class Room extends BaseDomain {
     private String week5;
     private String week6;
     private String week7;
+    
+    /**
+     * 教室规模
+     * 小教室(40人)
+     * 中教室(80人)
+     * 大教室(200人)
+     * 大学生活动中心
+     * 礼堂
+     */
+    private String scale;
 }

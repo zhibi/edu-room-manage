@@ -34,9 +34,9 @@ public class UserController extends BaseController {
 
 
     @Autowired
-    private UserService    userService;
+    private UserService userService;
     @Autowired
-    private UserMapper     userMapper;
+    private UserMapper  userMapper;
 
     @Autowired
     private RoomService       roomService;
@@ -53,7 +53,7 @@ public class UserController extends BaseController {
     @Operation("用户详情")
     @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
     public String detail(@PathVariable Integer id, Model model) {
-        User   user        = userMapper.selectByPrimaryKey(id);
+        User user = userMapper.selectByPrimaryKey(id);
         if (null != user) {
         } else {
             user = new User();
@@ -92,7 +92,7 @@ public class UserController extends BaseController {
             if (user.getId().equals(loginAdmin().getId())) {
                 session.setAttribute(Constant.SESSION_USER, user);
             }
-            return refresh("修改成功", attributes);
+            return redirect("/console/user/index", "修改成功", attributes);
         } catch (Exception e) {
             throw new MessageException(e.getMessage());
         }

@@ -3,6 +3,7 @@ package edu.room.manage.domain;
 import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
  * @author 执笔
  */
 @Data
+@Table(name = "building")
 public class Floor extends BaseDomain {
 
     @NotEmpty(message = "名称不能为空")
