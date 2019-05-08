@@ -179,12 +179,13 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/info", method = {RequestMethod.GET})
+    @Operation(value = "个人信息", needLogin = true)
     public String info(Model model) {
         model.addAttribute("user", userMapper.selectByPrimaryKey(loginUser().getId()));
         return "site/info";
     }
 
-    @Operation("修改用户信息")
+    @Operation(value = "修改用户信息", needLogin = true)
     @RequestMapping(value = "/updateInfo", method = {RequestMethod.POST})
     public String updateInfo(User user, RedirectAttributes attributes) {
         userMapper.updateByPrimaryKeySelective(user);
