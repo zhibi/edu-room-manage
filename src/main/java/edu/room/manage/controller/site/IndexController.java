@@ -174,6 +174,25 @@ public class IndexController extends BaseController {
     }
 
     /**
+     * 个人信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/info", method = {RequestMethod.GET})
+    public String info(Model model) {
+        model.addAttribute("user", userMapper.selectByPrimaryKey(loginUser().getId()));
+        return "site/info";
+    }
+
+    @Operation("修改用户信息")
+    @RequestMapping(value = "/updateInfo", method = {RequestMethod.POST})
+    public String updateInfo(User user, RedirectAttributes attributes) {
+        userMapper.updateByPrimaryKeySelective(user);
+        return refresh("修改成功", attributes);
+    }
+
+
+    /**
      * 判断这天有没有被预约
      *
      * @param room

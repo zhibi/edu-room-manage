@@ -69,20 +69,6 @@ public class HomeController extends BaseController {
     }
 
     /**
-     * 首页展示数据
-     *
-     * @return
-     */
-    private Map<String, Object> getTotal() {
-        Integer             userCount = userMapper.selectCount(new User());
-        Map<String, Object> mp        = new HashMap<>(4);
-        mp.put("userCount", userCount);
-        mp.put("roomCount", roomMapper.selectCount(new Room()));
-        mp.put("floorCount", floorMapper.selectCount(new Floor()));
-        return mp;
-    }
-
-    /**
      * 登录页
      *
      * @return
@@ -154,4 +140,21 @@ public class HomeController extends BaseController {
             return redirect("/console/modifyPwd", "用户不存在，修改失败", attributes);
         }
     }
+
+
+
+    /**
+     * 首页展示数据
+     *
+     * @return
+     */
+    private Map<String, Object> getTotal() {
+        Integer             userCount = userMapper.selectCount(new User());
+        Map<String, Object> mp        = new HashMap<>(4);
+        mp.put("userCount", userCount);
+        mp.put("roomCount", roomMapper.selectCount(new Room()));
+        mp.put("floorCount", floorMapper.selectCount(new Floor()));
+        return mp;
+    }
+
 }
