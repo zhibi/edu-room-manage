@@ -1,0 +1,139 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+body a:link{
+	text-decoration: none;
+}
+body a:visited{
+	text-decoration: none;
+	color: #fcfcfd;
+}
+
+/*--------------------------------------top---------------------------------------*/
+/*网页head*/
+
+.header .top .top_nav_bg{
+	height: 36px;
+	width: 100%;
+	background-color: #032556;
+}
+.header .top .top_nav_bg .top_nav_center{
+	height: 36px;
+	width: 1112px;
+	margin: 0 auto;
+	/*background-color: #fcc;*/
+}
+.header .top .top_nav_bg .top_nav{
+	height: 36px;
+	width: 160px;
+	float: right;
+	text-align: center;
+	line-height: 36px;
+}
+
+.header .top .top_nav_bg .top_nav a:link{
+	font-size:14px;
+	color:#fcfcfd; 
+}
+
+/*logo部分*/
+
+.header .logo_bg{
+	background:url(../img/logo_bg.jpg) repeat;
+	height: 110px;
+	width: 100%;
+}
+.header .logo_bg .logo_bg_center{
+	width: 1112px;
+	height: 110px;
+	/*background-color: #ccc;*/
+	margin: 0 auto;
+	position: relative;
+}
+
+.header .logo_bg .logo_bg_center .logo_logo img{
+	width: 86px;
+	height: 86px;
+	float: left;
+	bottom: 8px;
+	position: absolute;
+}
+
+.header .logo_bg .logo_bg_center .title {
+	width:600px;
+	height: 110px;
+	font-size: 35px;
+	font-weight: 500;
+	font-family: "黑体";
+	/*font-style: italic;*/
+	color: #fff;
+	letter-spacing: 5px;
+	line-height: 110px;
+	float: left;
+	position: absolute;
+	left: 102px;
+}
+.header .logo_bg .logo_bg_center .title_down{
+	width:600px;
+	height:30px;
+	font-size: 15px;
+	color: #fff;
+	font-family: "黑体";
+	float: left;
+	position: absolute;
+	left: 102px;
+	bottom:2px;
+}
+.header .logo_bg .logo_bg_center .img img{
+	width:40px;
+	right:40px;
+	position: absolute;
+	left: 602px;
+	bottom:34px;
+}
+
+/*导航栏模块*/
+.header .nav{
+	width: 100%;
+	height: 42px;
+	background-color: #003a8c;
+}
+.header .nav .nav_center{
+	height: 42px;
+	width: 1112px;
+	margin: 0 auto;
+	/*background-color: #fcc;*/
+}
+.header .nav .nav_center .nav_mk{
+	width: 90px;
+	height: 42px;
+	line-height: 42px;
+	float: left;
+	font-size: 16px;
+}
+.header .nav .nav_center .nav_mk a:hover{
+	color: #1e8298;
+	text-shadow: 0 0 10px #889191;
+}
+
+/*----------------------------------------center---------------------------------------*/
+/*中间模块*/
+.con{
+	width: 1112px;
+	height: 680px;
+	margin:0 auto;
+	background-color: #f7f1e4;
+	padding-top: 50px;
+}
+
+
+/*------------------------------------footer-----------------------------------------*/
+/*底边栏*/
+
+.footer {
+	height: 36px;
+	width: 100%;
+	background-color: #032556;
+	margin-bottom: 0;
+}

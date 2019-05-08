@@ -6,6 +6,8 @@ import lombok.Data;
 import javax.persistence.Table;
 
 /**
+ * 预约表
+ *
  * @author 执笔
  * @date 2019/5/3 14:45
  */

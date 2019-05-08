@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "common/head.html"/>
+<link rel="stylesheet"
+      href="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"/>
+<body>
+<#include "common/header.html"/>
+<div class="con">
+  <div class="col-md-6 col-md-offset-3" style="background-color: white;padding: 20px 30px">
+    <h3>快速预约</h3>
+    <form class="form-horizontal" action="/search">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">日期</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control datetime" name="date" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">教学楼</label>
+        <div class="col-sm-8">
+          <select name="floorId" class="form-control">
+            <#list floorList as item>
+              <option value="${item.id!}">${item.name}</option>
+            </#list>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">预约时间课节</label>
+        <div class="col-sm-8">
+          <select name="week" class="form-control">
+            <option value="1">上午第一大节</option>
+            <option value="2">上午第二大节</option>
+            <option value="3">下午第一大节</option>
+            <option value="4">下午第二大节</option>
+            <option value="5">晚上第一大节</option>
+            <option value="6">晚上第二大节</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">教室类型</label>
+        <div class="col-sm-8">
+          <select name="scale" class="form-control">
+            <option value="小教室(40人)">小教室(40人)</option>
+            <option value="中教室(80人)">中教室(80人)</option>
+            <option value="大教室(200人)">大教室(200人)</option>
+            <option value="大学生活动中心">大学生活动中心</option>
+            <option value="礼堂">礼堂</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">楼层</label>
+        <div class="col-sm-8">
+          <select name="floor" class="form-control">
+            <option value="一楼">一楼</option>
+            <option value="二楼">二楼</option>
+            <option value="三楼">三楼</option>
+            <option value="四楼">四楼</option>
+            <option value="五楼">五楼</option>
+            <option value="六楼">六楼</option>
+            <option value="七楼">七楼</option>
+            <option value="八楼">八楼</option>
+            <option value="九楼">九楼</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="col-md-offset-2 btn btn-info">搜索</button>
+    </form>
+    <div class="clear"></div>
+  </div>
+</div>
+<#include "common/footer.html"/>
+<!--时间-->
+
+<script type="text/javascript" src="/webjars/moment/2.24.0/min/moment.min.js"></script>
+<script type="text/javascript" src="/webjars/moment/2.24.0/min/locales.js"></script>
+<script type="text/javascript"
+        src="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $('.datetime').datetimepicker({
+        locale: 'zh-CN',
+        format: 'YYYY-MM-DD',
+    });
+</script>
+</body>
+</html>
