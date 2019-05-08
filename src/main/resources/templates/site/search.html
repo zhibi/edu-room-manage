@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "common/head.html"/>
+<body>
+<#include "common/header.html"/>
+<div class="con">
+  <div class="col-md-12">
+    <table class="table table-bordered " style="background-color: white;">
+      <thead>
+      <tr>
+        <th>教学楼</th>
+        <th>楼层</th>
+        <th>教室</th>
+        <th>教室类型</th>
+        <th>时间</th>
+        <th>预约时间课节</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <#if roomList?size gt 0>
+        <#list roomList as item>
+          <tr>
+            <td>${item.floorName!}</td>
+            <td>${item.floor!}</td>
+            <td>${item.name!}</td>
+            <td>${item.scale!}</td>
+            <td>${date!}</td>
+            <td>${week?switch("1","上午第一大节","2","上午第二大节","3","下午第一大节","4","下午第四大节","5","晚上第一大节","6","晚上第二大节")}</td>
+            <td><a>预约</a></td>
+          </tr>
+        </#list>
+        <#else>
+        <tr><td colspan="7">找不到符合条件的数据</td></tr>
+      </#if>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<#include "common/footer.html"/>
+</body>
+</html>

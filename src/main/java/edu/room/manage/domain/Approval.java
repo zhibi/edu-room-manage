@@ -2,6 +2,7 @@ package edu.room.manage.domain;
 
 import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Table;
 
@@ -13,6 +14,7 @@ import javax.persistence.Table;
  */
 @Data
 @Table(name = "orders")
+@Accessors(chain = true)
 public class Approval extends BaseDomain {
 
     /**
