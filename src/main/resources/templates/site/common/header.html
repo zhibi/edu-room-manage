@@ -2,8 +2,17 @@
   <div class="top">
     <div class="top_nav_bg">
       <div class="top_nav_center">
+        <div class="top_nav" style="float: left">
+          <a href="/">首页</a>
+        </div>
         <div class="top_nav">
-          <a href="login_alter.html" class="nobg">[个人中心]</a>
+          <#if sessionUser??>
+            <a href="login_alter.html" class="nobg">[个人中心]</a>
+            <a href="/modifyPwd" class="nobg">[修改密码]</a>
+            <a href="/logout" class="nobg">[退出登录]</a>
+          <#else>
+            <a href="/login" class="nobg">[登录]</a>
+          </#if>
         </div>
       </div>
     </div>

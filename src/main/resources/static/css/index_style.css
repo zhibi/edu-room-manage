@@ -26,10 +26,12 @@ body a:visited{
 }
 .header .top .top_nav_bg .top_nav{
 	height: 36px;
-	width: 160px;
 	float: right;
 	text-align: center;
 	line-height: 36px;
+}
+.header .top .top_nav_bg .top_nav a{
+	margin-left: 28px;
 }
 
 .header .top .top_nav_bg .top_nav a:link{
