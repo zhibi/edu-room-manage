@@ -97,19 +97,19 @@ public class HomeController extends BaseController {
     @RequestMapping(value = "/modifyPwd", method = {RequestMethod.POST})
     public String modifyPwd(String pwd, String password, String password2, RedirectAttributes attributes) {
         if (!password.equals(password2)) {
-            return redirect("/site/modifyPwd", "两次密码不一样", attributes);
+            return redirect("/modifyPwd", "两次密码不一样", attributes);
         }
         User user = userMapper.selectByPrimaryKey(loginUser().getId());
         if (null != user) {
             if (!Md5Utils.encode(pwd).equalsIgnoreCase(user.getPassword())) {
-                return redirect("/site/modifyPwd", "原密码错误", attributes);
+                return redirect("/modifyPwd", "原密码错误", attributes);
             }
             String newPassword = Md5Utils.encode(password);
             user.setPassword(newPassword);
             userMapper.updateByPrimaryKeySelective(user);
-            return redirect("/site/modifyPwd", "修改成功", attributes);
+            return redirect("/modifyPwd", "修改成功", attributes);
         } else {
-            return redirect("/site/modifyPwd", "用户不存在，修改失败", attributes);
+            return redirect("/modifyPwd", "用户不存在，修改失败", attributes);
         }
     }
 }
