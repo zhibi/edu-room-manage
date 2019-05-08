@@ -69,4 +69,17 @@ public class OrdersController extends BaseController {
         model.addAttribute("ordersList", pageInfo.getList());
         return "site/orders/me";
     }
+
+    @GetMapping("approval")
+    public String approval(Model model) {
+        MybatisCondition condition = new MybatisCondition().order("a.id", false);
+        if (loginUser().getType() == User.UserTypeEnum.LANDLORD) {
+            condition.eq("u2.id", loginUser().getId());
+        } else {
+            condition.eq("u1.id", loginUser().getId());
+        }
+        PageInfo<ApprovalDTO> pageInfo = approvalService.selectDtoPage(condition);
+        model.addAttribute("ordersList", pageInfo.getList());
+        return "site/orders/approval";
+    }
 }

@@ -8,11 +8,14 @@
         <div class="top_nav">
           <#if sessionUser??>
             <a href="/info" class="nobg">[个人中心]</a>
-            <a href="/modifyPwd" class="nobg">[修改密码]</a>
-            <a href="/logout" class="nobg">[退出登录]</a>
             <#if sessionUser.type == 'STUDENT' || sessionUser.type == 'TEACHER'>
               <a href="/orders/me" class="nobg">[我的预定]</a>
+            <#else>
+              <a href="/orders/approval" class="nobg">[我的审批]</a>
             </#if>
+            <a href="/modifyPwd" class="nobg">[修改密码]</a>
+            <a href="/logout" class="nobg">[退出登录]</a>
+
           <#else>
             <a href="/login" class="nobg">[登录]</a>
           </#if>

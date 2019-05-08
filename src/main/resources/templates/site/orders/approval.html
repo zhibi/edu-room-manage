@@ -12,10 +12,11 @@
         ${errorMessage!}
       </div>
     </#if>
-    <h3>我的预约</h3>
+    <h3>我的审批</h3>
     <table class="table table-bordered " style="background-color: white;">
       <thead>
       <tr>
+        <th>预约用户</th>
         <th>教学楼</th>
         <th>楼层</th>
         <th>教室</th>
@@ -27,12 +28,14 @@
         <th>一级评审意见</th>
         <th>二级评审意见</th>
         <th>预约状态</th>
+        <th>操作</th>
       </tr>
       </thead>
       <tbody>
       <#if ordersList?size gt 0>
         <#list ordersList as item>
           <tr>
+            <td>${item.userName!}</td>
             <td>${item.floorName!}</td>
             <td>${item.floor!}</td>
             <td>${item.roomName!}</td>
@@ -44,6 +47,14 @@
             <td>${item.opinion1!}</td>
             <td>${item.opinion2!}</td>
             <td>${item.status?switch("WAIT","待审核","AGREE_1","一级评审同意","REJECT_1","一级评审拒绝","AGREE_2","二级评审同意","二级评审拒绝")}</td>
+            <td>
+              <#if sessionUser.type == "LANDLORD" && item.status == "AGREE_1">
+                <a class="btn btn-default btn-xs">审批</a>
+              </#if>
+              <#if sessionUser.type == "LANDLORD" && item.status == "AGREE_1">
+                <a class="btn btn-default btn-xs">审批</a>
+              </#if>
+            </td>
           </tr>
         </#list>
       <#else>
