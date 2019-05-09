@@ -6,11 +6,12 @@ import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.domain.Approval;
 import edu.room.manage.domain.OrdersLog;
+import edu.room.manage.domain.OrdersOvertime;
 import edu.room.manage.domain.User;
 import edu.room.manage.dto.ApprovalDTO;
 import edu.room.manage.mapper.ApprovalMapper;
 import edu.room.manage.mapper.OrdersLogMapper;
-import edu.room.manage.mapper.UserMapper;
+import edu.room.manage.mapper.OrdersOvertimeMapper;
 import edu.room.manage.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+
 /**
  * @author 执笔
  * @date 2019/5/8 15:13
@@ -32,13 +35,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class OrdersController extends BaseController {
 
     @Autowired
-    private ApprovalMapper  approvalMapper;
+    private ApprovalMapper       approvalMapper;
     @Autowired
-    private UserMapper      userMapper;
+    private OrdersOvertimeMapper ordersOvertimeMapper;
     @Autowired
-    private ApprovalService approvalService;
+    private ApprovalService      approvalService;
     @Autowired
-    private OrdersLogMapper ordersLogMapper;
+    private OrdersLogMapper      ordersLogMapper;
 
     /**
      * 预约教室
@@ -108,18 +111,26 @@ public class OrdersController extends BaseController {
      * @return
      */
     @PostMapping("sp")
+    @Transactional
     public String sp(Integer id, String result, String remark, RedirectAttributes attributes) {
         Approval  approval  = approvalMapper.selectByPrimaryKey(id);
-        OrdersLog ordersLog = new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark(remark);
+        OrdersLog ordersLog = new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark(remark).setStatusOld(approval.getStatus());
+        // 判断是否超时
+        if (LocalDate.parse(approval.getOrderTime()).compareTo(LocalDate.now()) < 1) {
+            approval.setStatus(Approval.ApprovalStatusEnum.OVER_TIME);
+            approvalMapper.updateByPrimaryKeySelective(approval);
+            ordersLogMapper.insertSelective(ordersLog.setStatusNew(approval.getStatus()));
+            // 添加超时
+            ordersOvertimeMapper.insertSelective(new OrdersOvertime().setOrdersId(approval.getId()));
+            return refresh("预约已超时，不能审批", attributes);
+        }
         // 楼主
         if (loginUser().getType() == User.UserTypeEnum.LANDLORD) {
             approval.setOpinion2(remark);
             approval.setStatus("1".equalsIgnoreCase(result) ? Approval.ApprovalStatusEnum.AGREE_2 : Approval.ApprovalStatusEnum.REJECT_2);
-            ordersLog.setStatusOld(Approval.ApprovalStatusEnum.AGREE_1);
         } else {
             approval.setOpinion1(remark);
             approval.setStatus("1".equalsIgnoreCase(result) ? Approval.ApprovalStatusEnum.AGREE_1 : Approval.ApprovalStatusEnum.REJECT_1);
-            ordersLog.setStatusOld(Approval.ApprovalStatusEnum.WAIT);
         }
         approvalMapper.updateByPrimaryKeySelective(approval);
         ordersLogMapper.insertSelective(ordersLog.setStatusNew(approval.getStatus()));

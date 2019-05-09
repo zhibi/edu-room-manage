@@ -1,9 +1,11 @@
 package edu.room.manage.domain;
 
+import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author 执笔
@@ -12,7 +14,7 @@ import javax.persistence.Table;
 @Data
 @Accessors(chain = true)
 @Table(name = "Orders_Log")
-public class OrdersLog {
+public class OrdersLog extends BaseDomain implements Serializable {
 
     /**
      *

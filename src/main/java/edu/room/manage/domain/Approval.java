@@ -55,6 +55,10 @@ public class Approval extends BaseDomain {
          */
         WAIT,
         /**
+         * 超时
+         */
+        OVER_TIME,
+        /**
          * 同意
          */
         AGREE_1,

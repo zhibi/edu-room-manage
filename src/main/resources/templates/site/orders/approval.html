@@ -46,7 +46,7 @@
             <td>${item.opinionUser2!}</td>
             <td>${item.opinion1!}</td>
             <td>${item.opinion2!}</td>
-            <td>${item.status?switch("WAIT","待审批","AGREE_1","一级评审同意","REJECT_1","一级评审拒绝","AGREE_2","二级评审同意","二级评审拒绝")}</td>
+            <td>${item.status?switch("WAIT","待审批","AGREE_1","一级评审同意","REJECT_1","一级评审拒绝","AGREE_2","二级评审同意","OVER_TIME","超时","二级评审拒绝")}</td>
             <td>
               <#if sessionUser.type == "LANDLORD" && item.status == "AGREE_1">
                 <a class="btn btn-default btn-xs" onclick="sp('${item.id}')">审批</a>
