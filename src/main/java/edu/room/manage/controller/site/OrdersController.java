@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -81,5 +82,28 @@ public class OrdersController extends BaseController {
         PageInfo<ApprovalDTO> pageInfo = approvalService.selectDtoPage(condition);
         model.addAttribute("ordersList", pageInfo.getList());
         return "site/orders/approval";
+    }
+
+    /**
+     * 审批
+     *
+     * @param id
+     * @param result
+     * @param remark
+     * @return
+     */
+    @PostMapping("sp")
+    public String sp(Integer id, String result, String remark, RedirectAttributes attributes) {
+        Approval approval = approvalMapper.selectByPrimaryKey(id);
+        // 楼主
+        if (loginUser().getType() == User.UserTypeEnum.LANDLORD) {
+            approval.setOpinion2(remark);
+            approval.setStatus("1".equalsIgnoreCase(result) ? Approval.ApprovalStatusEnum.AGREE_2 : Approval.ApprovalStatusEnum.REJECT_2);
+        } else {
+            approval.setOpinion1(remark);
+            approval.setStatus("1".equalsIgnoreCase(result) ? Approval.ApprovalStatusEnum.AGREE_1 : Approval.ApprovalStatusEnum.REJECT_1);
+        }
+        approvalMapper.updateByPrimaryKeySelective(approval);
+        return refresh("审批成功", attributes);
     }
 }
