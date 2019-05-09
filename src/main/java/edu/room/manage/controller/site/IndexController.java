@@ -7,12 +7,10 @@ import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.common.utils.Md5Utils;
 import edu.room.manage.domain.Approval;
 import edu.room.manage.domain.Floor;
+import edu.room.manage.domain.LoginLog;
 import edu.room.manage.domain.User;
 import edu.room.manage.dto.RoomDTO;
-import edu.room.manage.mapper.ApprovalMapper;
-import edu.room.manage.mapper.FloorMapper;
-import edu.room.manage.mapper.RoomMapper;
-import edu.room.manage.mapper.UserMapper;
+import edu.room.manage.mapper.*;
 import edu.room.manage.service.UserService;
 import edu.room.manage.valid.ValidUser;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +47,8 @@ public class IndexController extends BaseController {
     private UserMapper     userMapper;
     @Autowired
     private UserService    userService;
+    @Autowired
+    private LoginLogMapper loginLogMapper;
 
     /**
      * 首页
@@ -124,6 +124,7 @@ public class IndexController extends BaseController {
             return "redirect:login";
         } else {
             logger.info("用户[" + username + "]登录认证通过");
+            loginLogMapper.insertSelective(new LoginLog().setIp(request.getRemoteAddr()).setUserId(user.getId()).setUsername(user.getUsername()));
             session.setAttribute(Constant.SESSION_USER, user);
             return "redirect:index";
         }
