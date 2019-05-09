@@ -8,6 +8,7 @@ import edu.room.manage.domain.Admin;
 import edu.room.manage.domain.Floor;
 import edu.room.manage.domain.Room;
 import edu.room.manage.domain.User;
+import edu.room.manage.mapper.AdminMapper;
 import edu.room.manage.mapper.FloorMapper;
 import edu.room.manage.mapper.RoomMapper;
 import edu.room.manage.mapper.UserMapper;
@@ -44,6 +45,9 @@ public class HomeController extends BaseController {
     private RoomMapper  roomMapper;
     @Autowired
     private FloorMapper floorMapper;
+    @Autowired
+    private AdminMapper adminMapper;
+
 
     /**
      * 首页
@@ -52,6 +56,7 @@ public class HomeController extends BaseController {
      * @return
      */
     @RequestMapping(value = "index", method = {RequestMethod.GET})
+
     public String index(Model model) {
         return "console/index";
     }
@@ -87,7 +92,7 @@ public class HomeController extends BaseController {
             return "redirect:login";
         }
         String username = validUser.getUsername();
-        Admin  admin     = (Admin) userService.login(validUser.getUsername(), validUser.getPassword(), User.UserRoleEnum.ADMIN);
+        Admin  admin    = (Admin) userService.login(validUser.getUsername(), validUser.getPassword(), User.UserRoleEnum.ADMIN);
         if (null == admin) {
             redirectAttributes.addFlashAttribute(Constant.ERROR_MESSAGE, "用户名或密码不正确");
             return "redirect:login";
@@ -128,20 +133,19 @@ public class HomeController extends BaseController {
         if (!password.equals(password2)) {
             return redirect("/console/modifyPwd", "两次密码不一样", attributes);
         }
-        User user = userMapper.selectByPrimaryKey(loginAdmin().getId());
+        Admin user = adminMapper.selectByPrimaryKey(loginAdmin().getId());
         if (null != user) {
             if (!Md5Utils.encode(pwd).equalsIgnoreCase(user.getPassword())) {
                 return redirect("/console/modifyPwd", "原密码错误", attributes);
             }
             String newPassword = Md5Utils.encode(password);
             user.setPassword(newPassword);
-            userMapper.updateByPrimaryKeySelective(user);
+            adminMapper.updateByPrimaryKeySelective(user);
             return redirect("/console/modifyPwd", "修改成功", attributes);
         } else {
             return redirect("/console/modifyPwd", "用户不存在，修改失败", attributes);
         }
     }
-
 
 
     /**
