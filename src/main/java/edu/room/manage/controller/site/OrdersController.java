@@ -5,13 +5,16 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.domain.Approval;
+import edu.room.manage.domain.OrdersLog;
 import edu.room.manage.domain.User;
 import edu.room.manage.dto.ApprovalDTO;
 import edu.room.manage.mapper.ApprovalMapper;
+import edu.room.manage.mapper.OrdersLogMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +37,8 @@ public class OrdersController extends BaseController {
     private UserMapper      userMapper;
     @Autowired
     private ApprovalService approvalService;
+    @Autowired
+    private OrdersLogMapper ordersLogMapper;
 
     /**
      * 预约教室
@@ -45,6 +50,7 @@ public class OrdersController extends BaseController {
      * @return
      */
     @GetMapping("approval/{roomId}")
+    @Transactional
     public String approval(@PathVariable Integer roomId, String date, String week, RedirectAttributes attributes) {
         if (loginUser().getType() == User.UserTypeEnum.STUDENT
                 || loginUser().getType() == User.UserTypeEnum.TEACHER) {
@@ -55,6 +61,15 @@ public class OrdersController extends BaseController {
                     .setStatus(Approval.ApprovalStatusEnum.WAIT)
                     .setUserId(loginUser().getId());
             approvalMapper.insertSelective(approval);
+            ordersLogMapper.insertSelective(new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark("发起预约").setStatusNew(Approval.ApprovalStatusEnum.WAIT).setStatusOld(Approval.ApprovalStatusEnum.WAIT));
+            if (loginUser().getType() == User.UserTypeEnum.TEACHER) {
+                // 老师预约不需要辅导员审批
+                approval.setStatus(Approval.ApprovalStatusEnum.AGREE_1);
+                approval.setOpinion1("自动同意");
+                approvalMapper.updateByPrimaryKeySelective(approval);
+                ordersLogMapper.insertSelective(new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark("自动同意").setStatusNew(Approval.ApprovalStatusEnum.AGREE_1).setStatusOld(Approval.ApprovalStatusEnum.WAIT));
+            }
+
             return redirect("/orders/me", "预约成功", attributes);
         } else {
             return refresh("您不是学生或者教师，不能预约", attributes);
@@ -94,16 +109,20 @@ public class OrdersController extends BaseController {
      */
     @PostMapping("sp")
     public String sp(Integer id, String result, String remark, RedirectAttributes attributes) {
-        Approval approval = approvalMapper.selectByPrimaryKey(id);
+        Approval  approval  = approvalMapper.selectByPrimaryKey(id);
+        OrdersLog ordersLog = new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark(remark);
         // 楼主
         if (loginUser().getType() == User.UserTypeEnum.LANDLORD) {
             approval.setOpinion2(remark);
             approval.setStatus("1".equalsIgnoreCase(result) ? Approval.ApprovalStatusEnum.AGREE_2 : Approval.ApprovalStatusEnum.REJECT_2);
+            ordersLog.setStatusOld(Approval.ApprovalStatusEnum.AGREE_1);
         } else {
             approval.setOpinion1(remark);
             approval.setStatus("1".equalsIgnoreCase(result) ? Approval.ApprovalStatusEnum.AGREE_1 : Approval.ApprovalStatusEnum.REJECT_1);
+            ordersLog.setStatusOld(Approval.ApprovalStatusEnum.WAIT);
         }
         approvalMapper.updateByPrimaryKeySelective(approval);
+        ordersLogMapper.insertSelective(ordersLog.setStatusNew(approval.getStatus()));
         return refresh("审批成功", attributes);
     }
 }
