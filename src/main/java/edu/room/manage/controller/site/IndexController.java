@@ -118,7 +118,7 @@ public class IndexController extends BaseController {
             return "redirect:login";
         }
         String username = validUser.getUsername();
-        User   user     = userService.login(validUser.getUsername(), validUser.getPassword(), User.UserRoleEnum.USER);
+        User   user     = (User) userService.login(validUser.getUsername(), validUser.getPassword(), User.UserRoleEnum.USER);
         if (null == user) {
             redirectAttributes.addFlashAttribute(Constant.ERROR_MESSAGE, "用户名或密码不正确");
             return "redirect:login";

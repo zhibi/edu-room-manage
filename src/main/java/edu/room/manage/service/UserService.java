@@ -24,6 +24,6 @@ public interface UserService extends BaseService<User> {
      * @param role     用户类型
      * @return
      */
-    User login(String username, String password, User.UserRoleEnum role);
+    Object login(String username, String password, User.UserRoleEnum role);
 
 }

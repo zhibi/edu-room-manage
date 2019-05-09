@@ -4,7 +4,9 @@ import edu.room.manage.common.base.service.BaseServiceImpl;
 import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.common.utils.Md5Utils;
+import edu.room.manage.domain.Admin;
 import edu.room.manage.domain.User;
+import edu.room.manage.mapper.AdminMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
-    private UserMapper     userMapper;
+    private UserMapper  userMapper;
+    @Autowired
+    private AdminMapper adminMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -35,7 +39,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
             }
             String password = Md5Utils.encode(user.getPassword());
             user.setPassword(password);
-            user.setRole(User.UserRoleEnum.USER);
             userMapper.insertSelective(user);
         } else {
             boolean exist = isExist(new MybatisCondition().eq("username", user.getUsername()).eqNot("id", user.getId()));
@@ -58,9 +61,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
-    public User login(String username, String password, User.UserRoleEnum role) {
+    public Object login(String username, String password, User.UserRoleEnum role) {
+        if (role == User.UserRoleEnum.ADMIN) {
+            Admin admin = new Admin();
+            admin.setUsername(username);
+            admin.setPassword(Md5Utils.encode(password));
+            return adminMapper.selectOne(admin);
+        }
         User user = new User();
-        user.setRole(role);
         user.setUsername(username);
         user.setPassword(Md5Utils.encode(password));
         return userMapper.selectOne(user);

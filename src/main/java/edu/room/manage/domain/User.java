@@ -24,8 +24,6 @@ public class User extends BaseDomain implements Serializable {
      */
     private UserTypeEnum type;
 
-    private UserRoleEnum role;
-
     /**
      * 用户名
      */
@@ -46,10 +44,6 @@ public class User extends BaseDomain implements Serializable {
 
     public enum UserTypeEnum {
 
-        /**
-         * 管理员
-         */
-        ADMIN,
         /**
          * 学生
          */

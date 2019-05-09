@@ -4,6 +4,7 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.context.Constant;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.utils.Md5Utils;
+import edu.room.manage.domain.Admin;
 import edu.room.manage.domain.Floor;
 import edu.room.manage.domain.Room;
 import edu.room.manage.domain.User;
@@ -86,13 +87,13 @@ public class HomeController extends BaseController {
             return "redirect:login";
         }
         String username = validUser.getUsername();
-        User   user     = userService.login(validUser.getUsername(), validUser.getPassword(), User.UserRoleEnum.ADMIN);
-        if (null == user) {
+        Admin  admin     = (Admin) userService.login(validUser.getUsername(), validUser.getPassword(), User.UserRoleEnum.ADMIN);
+        if (null == admin) {
             redirectAttributes.addFlashAttribute(Constant.ERROR_MESSAGE, "用户名或密码不正确");
             return "redirect:login";
         } else {
             logger.info("用户[" + username + "]登录认证通过");
-            session.setAttribute(Constant.SESSION_ADMIN, user);
+            session.setAttribute(Constant.SESSION_ADMIN, admin);
             return "redirect:index";
         }
     }

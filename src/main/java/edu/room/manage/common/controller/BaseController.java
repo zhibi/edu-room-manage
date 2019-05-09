@@ -2,6 +2,7 @@ package edu.room.manage.common.controller;
 
 
 import edu.room.manage.common.context.Constant;
+import edu.room.manage.domain.Admin;
 import edu.room.manage.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -74,7 +75,7 @@ public abstract class BaseController implements Constant {
      *
      * @return
      */
-    protected User loginAdmin() {
-        return (User) session.getAttribute(SESSION_ADMIN);
+    protected Admin loginAdmin() {
+        return (Admin) session.getAttribute(SESSION_ADMIN);
     }
 }
