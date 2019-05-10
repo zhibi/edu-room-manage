@@ -72,13 +72,17 @@ public class OrdersController extends BaseController {
                 approvalMapper.updateByPrimaryKeySelective(approval);
                 ordersLogMapper.insertSelective(new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark("自动同意").setStatusNew(Approval.ApprovalStatusEnum.AGREE_1).setStatusOld(Approval.ApprovalStatusEnum.WAIT));
             }
-
             return redirect("/orders/me", "预约成功", attributes);
         } else {
             return refresh("您不是学生或者教师，不能预约", attributes);
         }
     }
 
+    /**
+     * 我的预约
+     * @param model
+     * @return
+     */
     @GetMapping("me")
     public String me(Model model) {
         MybatisCondition condition = new MybatisCondition()
@@ -89,6 +93,11 @@ public class OrdersController extends BaseController {
         return "site/orders/me";
     }
 
+    /**
+     * 我的审批
+     * @param model
+     * @return
+     */
     @GetMapping("approval")
     public String approval(Model model) {
         MybatisCondition condition = new MybatisCondition().order("a.id", false);

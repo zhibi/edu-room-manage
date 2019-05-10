@@ -56,6 +56,7 @@ public class IndexController extends BaseController {
      * @param model
      * @return
      */
+    @Operation(value = "首页", needLogin = true)
     @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET})
     public String index(Model model) {
         List<Floor> floorList = floorMapper.selectAll();
@@ -74,7 +75,15 @@ public class IndexController extends BaseController {
      * @return
      */
     @GetMapping("search")
-    public String search(String floor, String date, String scale, Integer floorId, String week, Model model) {
+    public String search(String floor, String date, String scale, Integer floorId, String week, Model model, RedirectAttributes attributes) {
+        // 时间判断
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        if (localDate.compareTo(LocalDate.now()) < 0) {
+            return refresh("不能预约以前的时间", attributes);
+        }
+        if (localDate.compareTo(LocalDate.now().plusDays(6)) > 0) {
+            return refresh("只能预约一周以内的时间", attributes);
+        }
         // 得到符合条件的所有教室
         MybatisCondition condition = new MybatisCondition()
                 .eq("r.floor_id", floorId)
@@ -126,7 +135,10 @@ public class IndexController extends BaseController {
             logger.info("用户[" + username + "]登录认证通过");
             loginLogMapper.insertSelective(new LoginLog().setIp(request.getRemoteAddr()).setUserId(user.getId()).setUsername(user.getUsername()));
             session.setAttribute(Constant.SESSION_USER, user);
-            return "redirect:index";
+            if (user.getType() == User.UserTypeEnum.STUDENT || user.getType() == User.UserTypeEnum.TEACHER) {
+                return "redirect:index";
+            }
+            return "redirect:/orders/approval";
         }
     }
 
