@@ -7,9 +7,9 @@ import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.User;
+import edu.room.manage.mapper.ClassesMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.FileUploadService;
-import edu.room.manage.service.RoomService;
 import edu.room.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,14 +34,13 @@ public class UserController extends BaseController {
 
 
     @Autowired
-    private UserService userService;
+    private UserService       userService;
     @Autowired
-    private UserMapper  userMapper;
-
-    @Autowired
-    private RoomService       roomService;
+    private UserMapper        userMapper;
     @Autowired
     private FileUploadService fileUploadService;
+    @Autowired
+    private ClassesMapper     classesMapper;
 
     @Operation("查看用户列表")
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
@@ -58,6 +57,7 @@ public class UserController extends BaseController {
         } else {
             user = new User();
         }
+        model.addAttribute("classesList", classesMapper.selectAll());
         model.addAttribute("user", user);
         return "console/user/detail";
     }
