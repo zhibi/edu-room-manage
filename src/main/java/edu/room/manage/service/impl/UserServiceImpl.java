@@ -73,4 +73,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         user.setPassword(Md5Utils.encode(password));
         return userMapper.selectOne(user);
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        userMapper.deleteById(id);
+    }
 }

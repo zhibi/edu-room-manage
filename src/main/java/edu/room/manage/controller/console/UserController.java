@@ -7,8 +7,7 @@ import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.User;
-import edu.room.manage.mapper.ClassesMapper;
-import edu.room.manage.mapper.UserMapper;
+import edu.room.manage.service.ClassesService;
 import edu.room.manage.service.FileUploadService;
 import edu.room.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +35,9 @@ public class UserController extends BaseController {
     @Autowired
     private UserService       userService;
     @Autowired
-    private UserMapper        userMapper;
-    @Autowired
     private FileUploadService fileUploadService;
     @Autowired
-    private ClassesMapper     classesMapper;
+    private ClassesService    classesService;
 
     @Operation("查看用户列表")
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
@@ -52,12 +49,12 @@ public class UserController extends BaseController {
     @Operation("用户详情")
     @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
     public String detail(@PathVariable Integer id, Model model) {
-        User user = userMapper.selectByPrimaryKey(id);
+        User user = userService.selectByPrimaryKey(id);
         if (null != user) {
         } else {
             user = new User();
         }
-        model.addAttribute("classesList", classesMapper.selectAll());
+        model.addAttribute("classesList", classesService.selectAll());
         model.addAttribute("user", user);
         return "console/user/detail";
     }
@@ -102,7 +99,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/delete", method = {RequestMethod.GET})
     @ResponseBody
     public ModelMap delete(Integer id) {
-        userMapper.deleteById(id);
+        userService.deleteById(id);
         return ReturnUtils.success("删除成功", null, null);
     }
 

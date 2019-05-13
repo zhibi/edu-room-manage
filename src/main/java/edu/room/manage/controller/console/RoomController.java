@@ -8,8 +8,7 @@ import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.Room;
 import edu.room.manage.dto.RoomDTO;
-import edu.room.manage.mapper.FloorMapper;
-import edu.room.manage.mapper.RoomMapper;
+import edu.room.manage.service.FloorService;
 import edu.room.manage.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,11 +31,9 @@ import javax.validation.Valid;
 public class RoomController extends BaseController {
 
     @Autowired
-    private RoomService roomService;
+    private RoomService  roomService;
     @Autowired
-    private RoomMapper  roomMapper;
-    @Autowired
-    private FloorMapper floorMapper;
+    private FloorService floorService;
 
     @Operation("查看教学楼")
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
@@ -49,12 +46,12 @@ public class RoomController extends BaseController {
     public String from(@PathVariable Integer id, Model model) {
         Room room;
         if (id != 0) {
-            room = roomMapper.selectByPrimaryKey(id);
+            room = roomService.selectByPrimaryKey(id);
         } else {
             room = new Room();
         }
         model.addAttribute("room", room);
-        model.addAttribute("floorList", floorMapper.selectAll());
+        model.addAttribute("floorList", floorService.selectAll());
         return "console/room/detail";
     }
 
@@ -72,7 +69,7 @@ public class RoomController extends BaseController {
     @RequestMapping(value = "/delete", method = {RequestMethod.GET})
     @ResponseBody
     public ModelMap delete(Integer id) {
-        roomMapper.deleteByPrimaryKey(id);
+        roomService.deleteByPrimaryKey(id);
         return ReturnUtils.success("操作成功", null, null);
     }
 

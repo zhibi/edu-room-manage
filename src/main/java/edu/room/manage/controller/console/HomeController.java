@@ -8,10 +8,9 @@ import edu.room.manage.domain.Admin;
 import edu.room.manage.domain.Floor;
 import edu.room.manage.domain.Room;
 import edu.room.manage.domain.User;
-import edu.room.manage.mapper.AdminMapper;
-import edu.room.manage.mapper.FloorMapper;
-import edu.room.manage.mapper.RoomMapper;
-import edu.room.manage.mapper.UserMapper;
+import edu.room.manage.service.AdminService;
+import edu.room.manage.service.FloorService;
+import edu.room.manage.service.RoomService;
 import edu.room.manage.service.UserService;
 import edu.room.manage.valid.ValidUser;
 import lombok.extern.slf4j.Slf4j;
@@ -38,15 +37,13 @@ public class HomeController extends BaseController {
 
 
     @Autowired
-    private UserMapper  userMapper;
+    private UserService  userService;
     @Autowired
-    private UserService userService;
+    private RoomService  roomService;
     @Autowired
-    private RoomMapper  roomMapper;
+    private FloorService floorService;
     @Autowired
-    private FloorMapper floorMapper;
-    @Autowired
-    private AdminMapper adminMapper;
+    private AdminService adminService;
 
 
     /**
@@ -133,14 +130,14 @@ public class HomeController extends BaseController {
         if (!password.equals(password2)) {
             return redirect("/console/modifyPwd", "两次密码不一样", attributes);
         }
-        Admin user = adminMapper.selectByPrimaryKey(loginAdmin().getId());
+        Admin user = adminService.selectByPrimaryKey(loginAdmin().getId());
         if (null != user) {
             if (!Md5Utils.encode(pwd).equalsIgnoreCase(user.getPassword())) {
                 return redirect("/console/modifyPwd", "原密码错误", attributes);
             }
             String newPassword = Md5Utils.encode(password);
             user.setPassword(newPassword);
-            adminMapper.updateByPrimaryKeySelective(user);
+            adminService.updateByPrimaryKeySelective(user);
             return redirect("/console/modifyPwd", "修改成功", attributes);
         } else {
             return redirect("/console/modifyPwd", "用户不存在，修改失败", attributes);
@@ -154,11 +151,11 @@ public class HomeController extends BaseController {
      * @return
      */
     private Map<String, Object> getTotal() {
-        Integer             userCount = userMapper.selectCount(new User());
+        Integer             userCount = userService.selectCount(new User());
         Map<String, Object> mp        = new HashMap<>(4);
         mp.put("userCount", userCount);
-        mp.put("roomCount", roomMapper.selectCount(new Room()));
-        mp.put("floorCount", floorMapper.selectCount(new Floor()));
+        mp.put("roomCount", roomService.selectCount(new Room()));
+        mp.put("floorCount", floorService.selectCount(new Floor()));
         return mp;
     }
 

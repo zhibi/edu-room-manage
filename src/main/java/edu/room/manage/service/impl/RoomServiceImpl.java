@@ -10,6 +10,8 @@ import edu.room.manage.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author 执笔
  */
@@ -23,6 +25,11 @@ public class RoomServiceImpl extends BaseServiceImpl<RoomMapper, Room> implement
     public PageInfo<RoomDTO> selectDtoPage(MybatisCondition condition) {
         startPage(condition);
         return new PageInfo<>(roomMapper.selectDto(condition));
+    }
+
+    @Override
+    public List<RoomDTO> selectDto(MybatisCondition condition) {
+        return roomMapper.selectDto(condition);
     }
 
 }

@@ -8,13 +8,15 @@ import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * 基础service 实现
  *
  * @param <T>
  * @author 执笔
  */
-public abstract class BaseServiceImpl<E extends Mapper<T>, T extends BaseDomain> implements BaseService<T> {
+public class BaseServiceImpl<E extends Mapper<T>, T extends BaseDomain> implements BaseService<T> {
 
     @Autowired
     protected E mapper;
@@ -46,6 +48,41 @@ public abstract class BaseServiceImpl<E extends Mapper<T>, T extends BaseDomain>
     public boolean isExist(MybatisCondition condition) {
         int count = mapper.selectCountByExample(condition);
         return count != 0;
+    }
+
+    @Override
+    public T selectByPrimaryKey(Integer id) {
+        return mapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<T> select(T obj) {
+        return mapper.select(obj);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        return mapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer selectCount(T t) {
+        return mapper.selectCount(t);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(T t) {
+        return mapper.updateByPrimaryKeySelective(t);
+    }
+
+    @Override
+    public List<T> selectAll() {
+        return mapper.selectAll();
+    }
+
+    @Override
+    public int insertSelective(T t) {
+        return mapper.insertSelective(t);
     }
 
 

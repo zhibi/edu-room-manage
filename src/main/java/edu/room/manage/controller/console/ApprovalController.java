@@ -34,8 +34,6 @@ public class ApprovalController extends BaseController {
 
     @Autowired
     private ApprovalService approvalService;
-    @Autowired
-    private ApprovalMapper  approvalMapper;
 
     @Operation("查看审批列表")
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
@@ -78,7 +76,7 @@ public class ApprovalController extends BaseController {
     @Operation("审批详情")
     @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
     public String detail(@PathVariable Integer id, Model model) {
-        Approval approval = approvalMapper.selectByPrimaryKey(id);
+        Approval approval = approvalService.selectByPrimaryKey(id);
         if (null == approval) {
             approval = new Approval();
         }

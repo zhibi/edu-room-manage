@@ -10,8 +10,7 @@ import edu.room.manage.domain.Floor;
 import edu.room.manage.domain.LoginLog;
 import edu.room.manage.domain.User;
 import edu.room.manage.dto.RoomDTO;
-import edu.room.manage.mapper.*;
-import edu.room.manage.service.UserService;
+import edu.room.manage.service.*;
 import edu.room.manage.valid.ValidUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +37,15 @@ import java.util.List;
 public class IndexController extends BaseController {
 
     @Autowired
-    private FloorMapper    floorMapper;
+    private FloorService    floorService;
     @Autowired
-    private RoomMapper     roomMapper;
+    private RoomService     roomService;
     @Autowired
-    private ApprovalMapper approvalMapper;
+    private ApprovalService approvalService;
     @Autowired
-    private UserMapper     userMapper;
+    private UserService     userService;
     @Autowired
-    private UserService    userService;
-    @Autowired
-    private LoginLogMapper loginLogMapper;
+    private LoginLogService loginLogService;
 
     /**
      * 首页
@@ -59,7 +56,7 @@ public class IndexController extends BaseController {
     @Operation(value = "首页", needLogin = true)
     @RequestMapping(value = {"/", "index"}, method = {RequestMethod.GET})
     public String index(Model model) {
-        List<Floor> floorList = floorMapper.selectAll();
+        List<Floor> floorList = floorService.selectAll();
         model.addAttribute("floorList", floorList);
         return "site/index";
     }
@@ -89,7 +86,7 @@ public class IndexController extends BaseController {
                 .eq("r.floor_id", floorId)
                 .eq("r.scale", scale)
                 .eq("r.floor", floor);
-        List<RoomDTO>     roomList = roomMapper.selectDto(condition);
+        List<RoomDTO>     roomList = roomService.selectDto(condition);
         Iterator<RoomDTO> iterator = roomList.iterator();
         while (iterator.hasNext()) {
             RoomDTO roomDTO = iterator.next();
@@ -133,7 +130,7 @@ public class IndexController extends BaseController {
             return "redirect:login";
         } else {
             logger.info("用户[" + username + "]登录认证通过");
-            loginLogMapper.insertSelective(new LoginLog().setIp(request.getRemoteAddr()).setUserId(user.getId()).setUsername(user.getUsername()));
+            loginLogService.insertSelective(new LoginLog().setIp(request.getRemoteAddr()).setUserId(user.getId()).setUsername(user.getUsername()));
             session.setAttribute(Constant.SESSION_USER, user);
             if (user.getType() == User.UserTypeEnum.STUDENT || user.getType() == User.UserTypeEnum.TEACHER) {
                 return "redirect:index";
@@ -172,14 +169,14 @@ public class IndexController extends BaseController {
         if (!password.equals(password2)) {
             return redirect("/modifyPwd", "两次密码不一样", attributes);
         }
-        User user = userMapper.selectByPrimaryKey(loginUser().getId());
+        User user = userService.selectByPrimaryKey(loginUser().getId());
         if (null != user) {
             if (!Md5Utils.encode(pwd).equalsIgnoreCase(user.getPassword())) {
                 return redirect("/modifyPwd", "原密码错误", attributes);
             }
             String newPassword = Md5Utils.encode(password);
             user.setPassword(newPassword);
-            userMapper.updateByPrimaryKeySelective(user);
+            userService.updateByPrimaryKeySelective(user);
             return redirect("/modifyPwd", "修改成功", attributes);
         } else {
             return redirect("/modifyPwd", "用户不存在，修改失败", attributes);
@@ -194,14 +191,14 @@ public class IndexController extends BaseController {
     @RequestMapping(value = "/info", method = {RequestMethod.GET})
     @Operation(value = "个人信息", needLogin = true)
     public String info(Model model) {
-        model.addAttribute("user", userMapper.selectByPrimaryKey(loginUser().getId()));
+        model.addAttribute("user", userService.selectByPrimaryKey(loginUser().getId()));
         return "site/info";
     }
 
     @Operation(value = "修改用户信息", needLogin = true)
     @RequestMapping(value = "/updateInfo", method = {RequestMethod.POST})
     public String updateInfo(User user, RedirectAttributes attributes) {
-        userMapper.updateByPrimaryKeySelective(user);
+        userService.updateByPrimaryKeySelective(user);
         return refresh("修改成功", attributes);
     }
 
@@ -219,7 +216,7 @@ public class IndexController extends BaseController {
                 .setWeek(week)
                 .setRoomId(room.getId())
                 .setOrderTime(date);
-        int count = approvalMapper.selectCount(approval);
+        int count = approvalService.selectCount(approval);
         return count > 0;
     }
 

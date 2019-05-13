@@ -6,13 +6,10 @@ import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.domain.Approval;
 import edu.room.manage.domain.OrdersLog;
-import edu.room.manage.domain.OrdersOvertime;
 import edu.room.manage.domain.User;
 import edu.room.manage.dto.ApprovalDTO;
-import edu.room.manage.mapper.ApprovalMapper;
-import edu.room.manage.mapper.OrdersLogMapper;
-import edu.room.manage.mapper.OrdersOvertimeMapper;
 import edu.room.manage.service.ApprovalService;
+import edu.room.manage.service.OrdersLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +32,9 @@ import java.time.LocalDate;
 public class OrdersController extends BaseController {
 
     @Autowired
-    private ApprovalMapper       approvalMapper;
+    private ApprovalService       approvalService;
     @Autowired
-    private OrdersOvertimeMapper ordersOvertimeMapper;
-    @Autowired
-    private ApprovalService      approvalService;
-    @Autowired
-    private OrdersLogMapper      ordersLogMapper;
+    private OrdersLogService      ordersLogService;
 
     /**
      * 预约教室
@@ -63,14 +56,14 @@ public class OrdersController extends BaseController {
                     .setWeek(week)
                     .setStatus(Approval.ApprovalStatusEnum.WAIT)
                     .setUserId(loginUser().getId());
-            approvalMapper.insertSelective(approval);
-            ordersLogMapper.insertSelective(new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark("发起预约").setStatusNew(Approval.ApprovalStatusEnum.WAIT).setStatusOld(Approval.ApprovalStatusEnum.WAIT));
+            approvalService.insertSelective(approval);
+            ordersLogService.insertSelective(new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark("发起预约").setStatusNew(Approval.ApprovalStatusEnum.WAIT).setStatusOld(Approval.ApprovalStatusEnum.WAIT));
             if (loginUser().getType() == User.UserTypeEnum.TEACHER) {
                 // 老师预约不需要辅导员审批
                 approval.setStatus(Approval.ApprovalStatusEnum.AGREE_1);
                 approval.setOpinion1("自动同意");
-                approvalMapper.updateByPrimaryKeySelective(approval);
-                ordersLogMapper.insertSelective(new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark("自动同意").setStatusNew(Approval.ApprovalStatusEnum.AGREE_1).setStatusOld(Approval.ApprovalStatusEnum.WAIT));
+                approvalService.updateByPrimaryKeySelective(approval);
+                ordersLogService.insertSelective(new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark("自动同意").setStatusNew(Approval.ApprovalStatusEnum.AGREE_1).setStatusOld(Approval.ApprovalStatusEnum.WAIT));
             }
             return redirect("/orders/me", "预约成功", attributes);
         } else {
@@ -122,15 +115,13 @@ public class OrdersController extends BaseController {
     @PostMapping("sp")
     @Transactional
     public String sp(Integer id, String result, String remark, RedirectAttributes attributes) {
-        Approval  approval  = approvalMapper.selectByPrimaryKey(id);
+        Approval  approval  = approvalService.selectByPrimaryKey(id);
         OrdersLog ordersLog = new OrdersLog().setOrdersId(approval.getId()).setUserId(loginUser().getId()).setRemark(remark).setStatusOld(approval.getStatus());
         // 判断是否超时
         if (LocalDate.parse(approval.getOrderTime()).compareTo(LocalDate.now()) < 1) {
             approval.setStatus(Approval.ApprovalStatusEnum.OVER_TIME);
-            approvalMapper.updateByPrimaryKeySelective(approval);
-            ordersLogMapper.insertSelective(ordersLog.setStatusNew(approval.getStatus()));
-            // 添加超时
-            ordersOvertimeMapper.insertSelective(new OrdersOvertime().setOrdersId(approval.getId()));
+            approvalService.updateByPrimaryKeySelective(approval);
+            ordersLogService.insertSelective(ordersLog.setStatusNew(approval.getStatus()));
             return refresh("预约已超时，不能审批", attributes);
         }
         // 楼主
@@ -141,8 +132,8 @@ public class OrdersController extends BaseController {
             approval.setOpinion1(remark);
             approval.setStatus("1".equalsIgnoreCase(result) ? Approval.ApprovalStatusEnum.AGREE_1 : Approval.ApprovalStatusEnum.REJECT_1);
         }
-        approvalMapper.updateByPrimaryKeySelective(approval);
-        ordersLogMapper.insertSelective(ordersLog.setStatusNew(approval.getStatus()));
+        approvalService.updateByPrimaryKeySelective(approval);
+        ordersLogService.insertSelective(ordersLog.setStatusNew(approval.getStatus()));
         return refresh("审批成功", attributes);
     }
 }

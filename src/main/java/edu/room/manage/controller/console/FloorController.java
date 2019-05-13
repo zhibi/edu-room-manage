@@ -12,6 +12,7 @@ import edu.room.manage.dto.FloorDTO;
 import edu.room.manage.mapper.FloorMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.FloorService;
+import edu.room.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,9 +36,7 @@ public class FloorController extends BaseController {
     @Autowired
     private FloorService floorService;
     @Autowired
-    private FloorMapper  floorMapper;
-    @Autowired
-    private UserMapper   userMapper;
+    private UserService  userService;
 
     @Operation("查看教学楼")
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
@@ -61,13 +60,13 @@ public class FloorController extends BaseController {
     @Operation("教学楼详情")
     @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
     public String detail(@PathVariable Integer id, Model model) {
-        Floor floor = floorMapper.selectByPrimaryKey(id);
+        Floor floor = floorService.selectByPrimaryKey(id);
         if (null != floor) {
         } else {
             floor = new Floor();
         }
         model.addAttribute("floor", floor);
-        model.addAttribute("userList", userMapper.select(new User().setType(User.UserTypeEnum.LANDLORD)));
+        model.addAttribute("userList", userService.select(new User().setType(User.UserTypeEnum.LANDLORD)));
         return "console/floor/detail";
     }
 
@@ -86,7 +85,7 @@ public class FloorController extends BaseController {
     @RequestMapping(value = "/delete", method = {RequestMethod.GET})
     @ResponseBody
     public ModelMap delete(Integer id) {
-        floorMapper.deleteByPrimaryKey(id);
+        floorService.deleteByPrimaryKey(id);
         return ReturnUtils.success("删除成功", null, null);
     }
 }

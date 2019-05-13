@@ -12,6 +12,7 @@ import edu.room.manage.dto.ClassesDTO;
 import edu.room.manage.mapper.ClassesMapper;
 import edu.room.manage.mapper.UserMapper;
 import edu.room.manage.service.ClassesService;
+import edu.room.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,9 +38,7 @@ public class ClassesController extends BaseController {
     @Autowired
     private ClassesService classesService;
     @Autowired
-    private ClassesMapper  classesMapper;
-    @Autowired
-    private UserMapper     userMapper;
+    private UserService    userService;
 
     @Operation("查看班级列表")
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
@@ -51,12 +50,12 @@ public class ClassesController extends BaseController {
     @Operation("班级详情")
     @RequestMapping(value = "/detail/{id}", method = {RequestMethod.GET})
     public String detail(@PathVariable Integer id, Model model) {
-        Classes classes = classesMapper.selectByPrimaryKey(id);
+        Classes classes = classesService.selectByPrimaryKey(id);
         if (null == classes) {
             classes = new Classes();
         }
         model.addAttribute("classes", classes);
-        model.addAttribute("userList", userMapper.select(new User().setType(User.UserTypeEnum.COUNSELOR)));
+        model.addAttribute("userList", userService.select(new User().setType(User.UserTypeEnum.COUNSELOR)));
         return "console/classes/detail";
     }
 
@@ -92,7 +91,7 @@ public class ClassesController extends BaseController {
     @RequestMapping(value = "/delete", method = {RequestMethod.GET})
     @ResponseBody
     public ModelMap delete(Integer id) {
-        classesMapper.deleteByPrimaryKey(id);
+        classesService.deleteByPrimaryKey(id);
         return ReturnUtils.success("删除成功", null, null);
     }
 }

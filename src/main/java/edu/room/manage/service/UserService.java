@@ -26,4 +26,9 @@ public interface UserService extends BaseService<User> {
      */
     Object login(String username, String password, User.UserRoleEnum role);
 
+    /**
+     * 通过主键删除
+     * @param id
+     */
+    void deleteById(Integer id);
 }
