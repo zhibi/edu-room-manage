@@ -19,4 +19,9 @@ public class Admin extends BaseDomain implements Serializable {
     private String username;
 
     private String password;
+
+    /**
+     *
+     */
+    private String type;
 }

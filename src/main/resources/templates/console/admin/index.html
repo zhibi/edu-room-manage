@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+<section class="content-header">
+  <h1>管理员管理</h1>
+</section>
+<section class="content table-content">
+  <#include "../common/messageTip.html"/>
+
+  <table id="dataGrid"></table>
+</section>
+<div id="toolbar">
+  <form role="form" id="searchForm" class="form-inline">
+    <div class="input-group">
+      <span class="input-group-addon">管理员名</span>
+      <input type="text" class="form-control" name="username">
+    </div>
+    <div>
+      <button type="button" id="searchBtn" class="btn btn-primary">查询</button>
+      <button type="reset" class="btn btn-warning">清空</button>
+      <a href="/console/admin/detail/0" class="btn btn-primary">添加管理员</a>
+    </div>
+  </form>
+
+</div>
+<#include "../common/footer.html"/>
+<#include "../common/bootstrap-table.html"/>
+</body>
+<script type="text/javascript">
+    /**
+     * 表单初始化
+     */
+    $(function () {
+        initDataGrid('/console/admin/list', [
+            {
+                title: "序号", field: "id", formatter: function (value, row, index) {
+                    //获取每页显示的数量
+                    var pageSize = $table.bootstrapTable('getOptions').pageSize;
+                    //获取当前是第几页
+                    var pageNumber = $table.bootstrapTable('getOptions').pageNumber;
+                    //返回序号，注意index是从0开始的，所以要加上1
+                    return pageSize * (pageNumber - 1) + index + 1;
+                }
+            },
+            {title: "管理员名字", field: "username"},
+            {title: "类型", field: "type", formatter: getType},
+            {title: "添加时间", field: "createTime"},
+            {title: "更新时间", field: "updateTime"},
+            {title: "操作", field: "operate", align: 'center', events: operateEvents, formatter: operateFormatter}
+        ]);
+    });
+
+    function getType(value, row, index) {
+        if (row.type === "admin") {
+            return "超级管理"
+        } else {
+            return "普通管理员";
+        }
+    }
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a href="/console/admin/detail/' + row.id + '" >',
+            '   <i class="glyphicon glyphicon-edit"></i>修改',
+            '</a>  '
+        ].join('');
+    }
+
+    window.operateEvents = {
+        'click .remove': function (e, value, row, index) {
+            operaModel.delRow(row.id, '/console/admin/delete', 'id');
+        }
+    };
+</script>
+</html>

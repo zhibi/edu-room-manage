@@ -80,4 +80,21 @@
       </li>
     </ul>
   </li>
+
+  <#if sessionAdmin.type == 'admin'>
+    <li class="treeview">
+      <a href="#">
+        <i class="fa fa-dashboard"></i>
+        <b>管理员管理</b>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+      </a>
+      <ul class="treeview-menu">
+        <li>
+          <a href="/console/admin/index" target="mainFrame"><b>管理员列表</b></a>
+        </li>
+      </ul>
+    </li>
+  </#if>
 </ul>

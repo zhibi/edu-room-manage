@@ -1,9 +1,9 @@
 package edu.room.manage.service.impl;
 
-import edu.room.manage.common.base.service.BaseService;
 import edu.room.manage.common.base.service.BaseServiceImpl;
 import edu.room.manage.domain.Admin;
 import edu.room.manage.mapper.AdminMapper;
+import edu.room.manage.service.AdminService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
  * @date 2019/5/13 18:36
  */
 @Service
-public class AdminServiceImpl extends BaseServiceImpl<AdminMapper, Admin> implements BaseService<Admin> {
+public class AdminServiceImpl extends BaseServiceImpl<AdminMapper, Admin> implements AdminService{
 }
