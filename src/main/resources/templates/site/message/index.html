@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "../common/head.html"/>
+<body>
+<#include "../common/header.html"/>
+<div class="con">
+  <div class="col-md-12">
+    <#if errorMessage??>
+      <div class="alert alert-info alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        ${errorMessage!}
+      </div>
+    </#if>
+    <h3>留言板</h3>
+    <table class="table table-bordered " style="background-color: white;">
+      <thead>
+      <tr>
+        <th>教学楼</th>
+        <th>教室</th>
+        <th>留言人</th>
+        <th>留言时间</th>
+        <th>留言内容</th>
+      </tr>
+      </thead>
+      <tbody>
+      <#if pageInfo.list?size gt 0>
+        <#list pageInfo.list as item>
+          <tr>
+            <td>${item.floorName!}</td>
+            <td>${item.roomName!}</td>
+            <td>${item.userName!}</td>
+            <td>${item.createTime.year + '-' + item.createTime.monthValue + "-" + item.createTime.dayOfMonth}</td>
+            <td>${item.content!}</td>
+          </tr>
+        </#list>
+      <#else>
+        <tr>
+          <td colspan="15">找不到符合条件的数据</td>
+        </tr>
+      </#if>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<#include "../common/footer.html"/>
+</body>
+</html>

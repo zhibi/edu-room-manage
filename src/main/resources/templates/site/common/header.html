@@ -12,6 +12,10 @@
               <a href="/orders/me" class="nobg">[我的预定]</a>
               <a href="/message/send" class="nobg">[去留言]</a>
             <#else>
+              <#if  sessionUser.type == 'LANDLORD' >
+                <a href="/message/index" class="nobg">[留言板]</a>
+              </#if>
+
               <a href="/orders/approval" class="nobg">[我的审批]</a>
             </#if>
             <a href="/modifyPwd" class="nobg">[修改密码]</a>

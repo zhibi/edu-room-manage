@@ -11,7 +11,7 @@
  Target Server Version : 50173
  File Encoding         : 65001
 
- Date: 09/05/2019 13:36:47
+ Date: 17/05/2019 10:58:29
 */
 
 SET NAMES utf8mb4;
@@ -27,8 +27,15 @@ CREATE TABLE `admin`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `create_time` datetime NULL DEFAULT NULL,
   `update_time` datetime NULL DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1000000 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1000002 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES ('admin', 'e10adc3949ba59abbe56e057f20f883e', 1000000, '2019-05-11 22:37:48', '2019-05-11 22:37:50', 'admin');
+INSERT INTO `admin` VALUES ('qqqq', 'qqqq', 1000001, '2019-05-16 15:26:49', '2019-05-16 15:26:49', 'default');
 
 -- ----------------------------
 -- Table structure for building
@@ -80,12 +87,34 @@ CREATE TABLE `login_log`  (
   `create_time` datetime NULL DEFAULT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1000001 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1000004 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
 INSERT INTO `login_log` VALUES ('qqqq', 1000002, '0:0:0:0:0:0:0:1', 1000000, '2019-05-09 13:36:11', '2019-05-09 13:36:11');
+INSERT INTO `login_log` VALUES ('qqqq', 1000002, '192.168.56.1', 1000001, '2019-05-10 15:22:05', '2019-05-10 15:22:05');
+INSERT INTO `login_log` VALUES ('qqqq', 1000002, '0:0:0:0:0:0:0:1', 1000002, '2019-05-17 10:47:38', '2019-05-17 10:47:38');
+INSERT INTO `login_log` VALUES ('t2', 1000005, '0:0:0:0:0:0:0:1', 1000003, '2019-05-17 10:56:19', '2019-05-17 10:56:19');
+
+-- ----------------------------
+-- Table structure for message
+-- ----------------------------
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message`  (
+  `user_id` int(11) NULL DEFAULT 0,
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
+  `room_id` int(11) NULL DEFAULT 0,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime NULL DEFAULT NULL,
+  `update_time` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1000001 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of message
+-- ----------------------------
+INSERT INTO `message` VALUES (1000002, '123456', 1000000, 1000000, '2019-05-17 10:49:33', '2019-05-17 10:49:33');
 
 -- ----------------------------
 -- Table structure for orders
@@ -185,7 +214,7 @@ CREATE TABLE `user`  (
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
   `classes_id` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1000006 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1000007 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user
@@ -194,5 +223,6 @@ INSERT INTO `user` VALUES ('admin', 'e10adc3949ba59abbe56e057f20f883e', '1', '12
 INSERT INTO `user` VALUES ('test1', 'e10adc3949ba59abbe56e057f20f883e', '辅导员', '12@qq.com1', '1231', '', 1000001, '2019-05-05 19:50:40', '2019-05-05 19:51:15', 'COUNSELOR', 0);
 INSERT INTO `user` VALUES ('qqqq', 'e10adc3949ba59abbe56e057f20f883e', '学生', 'admin@admin.com1', '6661', '', 1000002, '2019-05-05 21:06:39', '2019-05-08 16:54:09', 'STUDENT', 1000000);
 INSERT INTO `user` VALUES ('t2', 'e10adc3949ba59abbe56e057f20f883e', '楼主', '1', '1', '', 1000005, '2019-05-08 18:22:13', '2019-05-08 18:22:16', 'LANDLORD', 0);
+INSERT INTO `user` VALUES ('1', '698d51a19d8a121ce581499d7b701668', '1', '1234@33.com', '1', '', 1000006, '2019-05-11 22:41:00', '2019-05-11 22:41:00', 'STUDENT', 1000000);
 
 SET FOREIGN_KEY_CHECKS = 1;

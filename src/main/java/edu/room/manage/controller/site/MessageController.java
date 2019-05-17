@@ -37,23 +37,14 @@ public class MessageController extends BaseController {
     @Operation("查看留言列表")
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
     public String index(Model model) {
-        return "console/message/index";
-    }
-
-    /**
-     * 异步加载留言列表
-     *
-     * @return
-     */
-    @RequestMapping(value = "/list", method = {RequestMethod.GET})
-    public ModelMap list(MessageDTO messageDTO) {
-        ModelMap map = new ModelMap();
         MybatisCondition condition = new MybatisCondition()
+                .eq("f.user_id", loginUser().getId())
                 .order("m.id", false);
         PageInfo<MessageDTO> pageInfo = messageService.selectDtoPage(condition);
-        map.put("pageInfo", pageInfo);
-        return ReturnUtils.success("加载成功", map, null);
+        model.addAttribute(pageInfo);
+        return "site/message/index";
     }
+
 
     /**
      * 留言
@@ -66,6 +57,7 @@ public class MessageController extends BaseController {
 
     /**
      * 提交留言
+     *
      * @param message
      * @param attributes
      * @return
