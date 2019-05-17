@@ -2,6 +2,7 @@ package edu.room.manage.domain;
 
 import edu.room.manage.common.base.dto.BaseDomain;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 教室
@@ -9,6 +10,7 @@ import lombok.Data;
  * @author 执笔
  */
 @Data
+@Accessors(chain = true)
 public class Room extends BaseDomain {
 
     private String name;
@@ -37,7 +39,7 @@ public class Room extends BaseDomain {
     private String week5;
     private String week6;
     private String week7;
-    
+
     /**
      * 教室规模
      * 小教室(40人)

@@ -10,6 +10,7 @@
             <a href="/info" class="nobg">[个人中心]</a>
             <#if sessionUser.type == 'STUDENT' || sessionUser.type == 'TEACHER'>
               <a href="/orders/me" class="nobg">[我的预定]</a>
+              <a href="/message/send" class="nobg">[去留言]</a>
             <#else>
               <a href="/orders/approval" class="nobg">[我的审批]</a>
             </#if>

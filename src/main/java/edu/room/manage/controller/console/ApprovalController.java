@@ -8,7 +8,6 @@ import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.Approval;
 import edu.room.manage.dto.ApprovalDTO;
-import edu.room.manage.mapper.ApprovalMapper;
 import edu.room.manage.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -11,7 +11,7 @@ import javax.persistence.Table;
  */
 @Data
 @Table(name = "message")
-public class Message  extends BaseDomain {
+public class Message extends BaseDomain {
 
     /**
      *
@@ -22,4 +22,9 @@ public class Message  extends BaseDomain {
      * 内容
      */
     private String content;
+
+    /**
+     * 教室
+     */
+    private Integer roomId;
 }
