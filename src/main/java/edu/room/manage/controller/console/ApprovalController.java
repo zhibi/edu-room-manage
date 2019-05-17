@@ -52,6 +52,7 @@ public class ApprovalController extends BaseController {
         ModelMap map = new ModelMap();
         MybatisCondition condition = new MybatisCondition()
                 .like("u.name", approval.getUserName())
+                .like("f.name", approval.getFloorName())
                 .order("a.id", false);
         PageInfo<ApprovalDTO> pageInfo = approvalService.selectDtoPage(condition);
         map.put("pageInfo", pageInfo);
