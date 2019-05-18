@@ -5,9 +5,11 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.context.Constant;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
+import edu.room.manage.common.utils.Md5Utils;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.Admin;
 import edu.room.manage.service.AdminService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,6 +77,13 @@ public class AdminController extends BaseController {
                 throw new MessageException(result.getAllErrors().get(0).getDefaultMessage());
             }
             admin.setType("default");
+            if (admin.getId() == null && StringUtils.isBlank(admin.getPassword())) {
+                throw new MessageException("请输入密码");
+            }
+
+            if (StringUtils.isBlank(admin.getPassword())) {
+                admin.setPassword(Md5Utils.encode(admin.getPassword()));
+            }
             adminService.merge(admin);
             if (admin.getId().equals(loginAdmin().getId())) {
                 session.setAttribute(Constant.SESSION_ADMIN, admin);
