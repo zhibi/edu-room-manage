@@ -5,6 +5,7 @@ import edu.room.manage.common.annotation.Operation;
 import edu.room.manage.common.context.Constant;
 import edu.room.manage.common.controller.BaseController;
 import edu.room.manage.common.exception.MessageException;
+import edu.room.manage.common.mybatis.condition.MybatisCondition;
 import edu.room.manage.common.utils.Md5Utils;
 import edu.room.manage.common.utils.ReturnUtils;
 import edu.room.manage.domain.Admin;
@@ -80,8 +81,16 @@ public class AdminController extends BaseController {
             if (admin.getId() == null && StringUtils.isBlank(admin.getPassword())) {
                 throw new MessageException("请输入密码");
             }
+            MybatisCondition condition = new MybatisCondition();
+            condition.eq("username", admin.getUsername());
+            if (admin.getId() != null) {
+                condition.eqNot("id", admin.getId());
+            }
+            if(adminService.isExist(condition)){
+                throw new MessageException("用户名已经存在");
+            }
 
-            if (StringUtils.isBlank(admin.getPassword())) {
+            if (StringUtils.isNotBlank(admin.getPassword())) {
                 admin.setPassword(Md5Utils.encode(admin.getPassword()));
             }
             adminService.merge(admin);
